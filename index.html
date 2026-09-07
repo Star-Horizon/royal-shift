@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
 
@@ -14,17 +15,15 @@
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      min-height: 100vh;
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 100vh;
 
       background: #111111;
       color: #ffffff;
@@ -37,46 +36,244 @@
         sans-serif;
     }
 
+
     .container {
       width: 100%;
-      padding: 32px;
-      text-align: center;
+      max-width: 520px;
+
+      margin: 0 auto;
+
+      padding:
+        60px
+        24px
+        40px;
     }
+
 
     .logo {
-      margin-bottom: 20px;
+      text-align: center;
 
-      font-family: Georgia, serif;
+      font-family:
+        Georgia,
+        serif;
+
       font-size: 64px;
+
+      margin-bottom: 16px;
     }
 
+
     .title {
-      margin-bottom: 10px;
+      text-align: center;
 
       font-size: 18px;
       font-weight: 700;
+
       letter-spacing: 8px;
+
+      margin-bottom: 48px;
     }
 
+
+    .card {
+      background: #1b1b1b;
+
+      border-radius: 18px;
+
+      padding: 24px;
+    }
+
+
     .status {
-      margin-top: 30px;
+      text-align: center;
 
       color: #aaaaaa;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+
+    .line-name {
+      text-align: center;
+
+      font-size: 22px;
+      font-weight: 700;
+
+      margin-top: 10px;
+    }
+
+
+    .section-title {
+      font-size: 20px;
+      font-weight: 700;
+
+      margin-bottom: 8px;
+    }
+
+
+    .description {
+      color: #aaaaaa;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+
+      margin-bottom: 24px;
+    }
+
+
+    .field-label {
+      display: block;
+
+      font-size: 13px;
+
+      color: #bbbbbb;
+
+      margin-bottom: 8px;
+    }
+
+
+    .input {
+      width: 100%;
+      height: 52px;
+
+      padding: 0 16px;
+
+      border: 1px solid #444444;
+      border-radius: 12px;
+
+      background: #111111;
+      color: #ffffff;
+
+      font-size: 18px;
+
+      outline: none;
+    }
+
+
+    .input:focus {
+      border-color: #ffffff;
+    }
+
+
+    .button {
+      width: 100%;
+      height: 54px;
+
+      margin-top: 20px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: #ffffff;
+      color: #111111;
+
+      font-size: 16px;
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+
+    .button:disabled {
+      opacity: 0.45;
+
+      cursor: default;
+    }
+
+
+    .success-box {
+      text-align: center;
+    }
+
+
+    .success-title {
+      font-size: 22px;
+      font-weight: 700;
+
+      margin-bottom: 12px;
+    }
+
+
+    .cast-name {
+      font-size: 30px;
+      font-weight: 700;
+
+      margin: 24px 0 8px;
+    }
+
+
+    .cast-id {
+      color: #aaaaaa;
+
       font-size: 14px;
     }
 
-    .success {
-      color: #ffffff;
+
+    .admin-badge {
+      display: inline-block;
+
+      margin-top: 20px;
+
+      padding: 8px 14px;
+
+      border: 1px solid #666666;
+      border-radius: 999px;
+
+      font-size: 12px;
     }
 
-    .name {
-      margin-top: 14px;
 
-      font-size: 24px;
-      font-weight: 700;
+    .error {
+      color: #ff8a8a;
+
+      text-align: center;
+
+      line-height: 1.7;
     }
+
+
+    .hidden {
+      display: none;
+    }
+
+
+    .loading {
+      width: 30px;
+      height: 30px;
+
+      margin:
+        0
+        auto
+        20px;
+
+      border: 3px solid #444444;
+      border-top-color: #ffffff;
+
+      border-radius: 50%;
+
+      animation:
+        spin
+        0.8s
+        linear
+        infinite;
+    }
+
+
+    @keyframes spin {
+
+      to {
+        transform:
+          rotate(360deg);
+      }
+
+    }
+
   </style>
 </head>
+
 
 <body>
 
@@ -86,48 +283,176 @@
       R
     </div>
 
+
     <div class="title">
       ROYAL SHIFT
     </div>
 
-    <div
-      id="status"
-      class="status"
-    >
-      LINE認証中...
-    </div>
 
-    <div
-      id="name"
-      class="name"
-    ></div>
+    <!-- 認証中 -->
+    <section
+      id="loadingView"
+      class="card"
+    >
+
+      <div class="loading"></div>
+
+      <div
+        id="loadingText"
+        class="status"
+      >
+        LINE認証中...
+      </div>
+
+    </section>
+
+
+    <!-- 初回登録 -->
+    <section
+      id="registerView"
+      class="card hidden"
+    >
+
+      <div class="section-title">
+        初回登録
+      </div>
+
+
+      <div class="description">
+        ROYAL SHIFTを利用するために、
+        お名前を入力してください。
+      </div>
+
+
+      <div class="status">
+        LINEアカウント
+      </div>
+
+
+      <div
+        id="lineDisplayName"
+        class="line-name"
+      ></div>
+
+
+      <div style="height: 28px;"></div>
+
+
+      <label
+        class="field-label"
+        for="castName"
+      >
+        お名前
+      </label>
+
+
+      <input
+        id="castName"
+        class="input"
+        type="text"
+        autocomplete="name"
+        placeholder="例：拓弥"
+      >
+
+
+      <button
+        id="registerButton"
+        class="button"
+        type="button"
+      >
+        登録する
+      </button>
+
+    </section>
+
+
+    <!-- 登録済み -->
+    <section
+      id="successView"
+      class="card hidden"
+    >
+
+      <div class="success-box">
+
+        <div class="success-title">
+          LINE認証成功
+        </div>
+
+
+        <div class="status">
+          ROYAL SHIFTへようこそ
+        </div>
+
+
+        <div
+          id="castNameDisplay"
+          class="cast-name"
+        ></div>
+
+
+        <div
+          id="castIdDisplay"
+          class="cast-id"
+        ></div>
+
+
+        <div
+          id="adminBadge"
+          class="admin-badge hidden"
+        >
+          管理者
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- エラー -->
+    <section
+      id="errorView"
+      class="card hidden"
+    >
+
+      <div
+        id="errorMessage"
+        class="error"
+      ></div>
+
+    </section>
 
   </main>
 
 
   <script>
 
+    /* =====================================================
+     * 01. 設定
+     * ===================================================== */
+
     const LIFF_ID =
       "2011488723-gI54Hlt3";
 
 
-    async function startLiff() {
+    const GAS_API_URL =
+      "https://script.google.com/macros/s/AKfycbwSZZNbraag8jTLbZbqoXbq9UDQfCeIwA404xkEcVP9l5UZ-7-cCdQCNVXKVq7wqo8pNg/exec";
 
-      const status =
-        document.getElementById(
-          "status"
-        );
 
-      const name =
-        document.getElementById(
-          "name"
-        );
+    let currentIdToken =
+      "";
 
+
+    /* =====================================================
+     * 02. 起動
+     * ===================================================== */
+
+    async function startApp() {
 
       try {
 
         await liff.init({
-          liffId: LIFF_ID
+          liffId:
+            LIFF_ID
         });
 
 
@@ -135,8 +460,9 @@
           !liff.isLoggedIn()
         ) {
 
-          status.textContent =
-            "LINEログインへ移動します...";
+          setLoadingText(
+            "LINEログインへ移動します..."
+          );
 
 
           liff.login();
@@ -146,20 +472,76 @@
         }
 
 
-        const profile =
-          await liff.getProfile();
+        /*
+         * IDトークン取得
+         */
+        currentIdToken =
+          liff.getIDToken();
 
 
-        status.textContent =
-          "LINE認証成功";
+        if (
+          !currentIdToken
+        ) {
 
-        status.classList.add(
-          "success"
+          throw new Error(
+            "LINE IDトークンを取得できませんでした"
+          );
+
+        }
+
+
+        setLoadingText(
+          "登録情報を確認しています..."
         );
 
 
-        name.textContent =
-          profile.displayName;
+        /*
+         * GAS側でLINE認証
+         */
+        const result =
+          await callGasApi(
+            "authStatus",
+            {
+              idToken:
+                currentIdToken
+            }
+          );
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.error ||
+            "認証に失敗しました"
+          );
+
+        }
+
+
+        /*
+         * 登録済み
+         */
+        if (
+          result.registered
+        ) {
+
+          showSuccess(
+            result.cast
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * 未登録
+         */
+        showRegister(
+          result.lineDisplayName || ""
+        );
 
 
       } catch (error) {
@@ -169,19 +551,418 @@
         );
 
 
-        status.textContent =
-          "LINE認証エラー";
-
-
-        name.textContent =
-          error.message || String(error);
+        showError(
+          error.message ||
+          String(error)
+        );
 
       }
 
     }
 
 
-    startLiff();
+    /* =====================================================
+     * 03. GAS API
+     * ===================================================== */
+
+    async function callGasApi(
+      action,
+      data
+    ) {
+
+      /*
+       * GAS Web AppはPOST後に
+       * googleusercontentへリダイレクトするため、
+       * application/jsonのPOSTではなく
+       * simple requestになる形式で送る。
+       */
+      const payload =
+        new URLSearchParams();
+
+
+      payload.append(
+        "action",
+        action
+      );
+
+
+      Object.keys(
+        data || {}
+      ).forEach(
+        (key) => {
+
+          payload.append(
+            key,
+            String(
+              data[key] ?? ""
+            )
+          );
+
+        }
+      );
+
+
+      const response =
+        await fetch(
+          GAS_API_URL,
+          {
+            method:
+              "POST",
+
+            body:
+              payload,
+
+            redirect:
+              "follow"
+          }
+        );
+
+
+      if (
+        !response.ok
+      ) {
+
+        throw new Error(
+          "サーバー通信に失敗しました"
+        );
+
+      }
+
+
+      const text =
+        await response.text();
+
+
+      try {
+
+        return JSON.parse(
+          text
+        );
+
+      } catch (error) {
+
+        console.error(
+          "GAS response:",
+          text
+        );
+
+
+        throw new Error(
+          "サーバーから正しい応答を取得できませんでした"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+     * 04. 初期管理者登録
+     * ===================================================== */
+
+    async function registerInitialAdmin() {
+
+      const input =
+        document.getElementById(
+          "castName"
+        );
+
+
+      const button =
+        document.getElementById(
+          "registerButton"
+        );
+
+
+      const castName =
+        String(
+          input.value || ""
+        ).trim();
+
+
+      if (
+        !castName
+      ) {
+
+        alert(
+          "お名前を入力してください"
+        );
+
+        input.focus();
+
+        return;
+
+      }
+
+
+      try {
+
+        button.disabled =
+          true;
+
+
+        button.textContent =
+          "登録中...";
+
+
+        const result =
+          await callGasApi(
+            "registerInitialAdmin",
+            {
+              idToken:
+                currentIdToken,
+
+              castName:
+                castName
+            }
+          );
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.error ||
+            "登録に失敗しました"
+          );
+
+        }
+
+
+        showSuccess(
+          result.cast
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        alert(
+          error.message ||
+          String(error)
+        );
+
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "登録する";
+
+      }
+
+    }
+
+
+    /* =====================================================
+     * 05. 画面表示
+     * ===================================================== */
+
+    function hideAllViews() {
+
+      [
+        "loadingView",
+        "registerView",
+        "successView",
+        "errorView"
+      ].forEach(
+        (id) => {
+
+          document
+            .getElementById(id)
+            .classList
+            .add("hidden");
+
+        }
+      );
+
+    }
+
+
+    function setLoadingText(
+      text
+    ) {
+
+      document
+        .getElementById(
+          "loadingText"
+        )
+        .textContent =
+          text;
+
+    }
+
+
+    function showRegister(
+      lineDisplayName
+    ) {
+
+      hideAllViews();
+
+
+      document
+        .getElementById(
+          "registerView"
+        )
+        .classList
+        .remove("hidden");
+
+
+      document
+        .getElementById(
+          "lineDisplayName"
+        )
+        .textContent =
+          lineDisplayName ||
+          "LINEユーザー";
+
+
+      setTimeout(
+        () => {
+
+          document
+            .getElementById(
+              "castName"
+            )
+            .focus();
+
+        },
+        100
+      );
+
+    }
+
+
+    function showSuccess(
+      cast
+    ) {
+
+      hideAllViews();
+
+
+      document
+        .getElementById(
+          "successView"
+        )
+        .classList
+        .remove("hidden");
+
+
+      document
+        .getElementById(
+          "castNameDisplay"
+        )
+        .textContent =
+          cast.castName || "";
+
+
+      document
+        .getElementById(
+          "castIdDisplay"
+        )
+        .textContent =
+          cast.castId
+            ? "CAST ID : " +
+              cast.castId
+            : "";
+
+
+      const adminBadge =
+        document.getElementById(
+          "adminBadge"
+        );
+
+
+      if (
+        cast.isAdmin
+      ) {
+
+        adminBadge
+          .classList
+          .remove("hidden");
+
+      } else {
+
+        adminBadge
+          .classList
+          .add("hidden");
+
+      }
+
+    }
+
+
+    function showError(
+      message
+    ) {
+
+      hideAllViews();
+
+
+      document
+        .getElementById(
+          "errorView"
+        )
+        .classList
+        .remove("hidden");
+
+
+      document
+        .getElementById(
+          "errorMessage"
+        )
+        .textContent =
+          message;
+
+    }
+
+
+    /* =====================================================
+     * 06. イベント
+     * ===================================================== */
+
+    document
+      .getElementById(
+        "registerButton"
+      )
+      .addEventListener(
+        "click",
+        registerInitialAdmin
+      );
+
+
+    document
+      .getElementById(
+        "castName"
+      )
+      .addEventListener(
+        "keydown",
+        (event) => {
+
+          if (
+            event.key ===
+            "Enter"
+          ) {
+
+            registerInitialAdmin();
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+     * 07. START
+     * ===================================================== */
+
+    startApp();
 
   </script>
 
