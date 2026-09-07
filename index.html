@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  >
+
+  <title>ROYAL SHIFT</title>
+
+  <!-- LIFF SDK -->
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: #111111;
+      color: #ffffff;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+    }
+
+    .container {
+      width: 100%;
+      padding: 32px;
+      text-align: center;
+    }
+
+    .logo {
+      margin-bottom: 20px;
+
+      font-family: Georgia, serif;
+      font-size: 64px;
+    }
+
+    .title {
+      margin-bottom: 10px;
+
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 8px;
+    }
+
+    .status {
+      margin-top: 30px;
+
+      color: #aaaaaa;
+      font-size: 14px;
+    }
+
+    .success {
+      color: #ffffff;
+    }
+
+    .name {
+      margin-top: 14px;
+
+      font-size: 24px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
+    <div class="logo">
+      R
+    </div>
+
+    <div class="title">
+      ROYAL SHIFT
+    </div>
+
+    <div
+      id="status"
+      class="status"
+    >
+      LINE認証中...
+    </div>
+
+    <div
+      id="name"
+      class="name"
+    ></div>
+
+  </main>
+
+
+  <script>
+
+    const LIFF_ID =
+      "2011488723-gl54Hlt3";
+
+
+    async function startLiff() {
+
+      const status =
+        document.getElementById(
+          "status"
+        );
+
+      const name =
+        document.getElementById(
+          "name"
+        );
+
+
+      try {
+
+        await liff.init({
+          liffId: LIFF_ID
+        });
+
+
+        if (
+          !liff.isLoggedIn()
+        ) {
+
+          status.textContent =
+            "LINEログインへ移動します...";
+
+
+          liff.login();
+
+          return;
+
+        }
+
+
+        const profile =
+          await liff.getProfile();
+
+
+        status.textContent =
+          "LINE認証成功";
+
+        status.classList.add(
+          "success"
+        );
+
+
+        name.textContent =
+          profile.displayName;
+
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        status.textContent =
+          "LINE認証エラー";
+
+
+        name.textContent =
+          error.message || String(error);
+
+      }
+
+    }
+
+
+    startLiff();
+
+  </script>
+
+</body>
+</html>
