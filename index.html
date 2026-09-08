@@ -995,7 +995,7 @@ if (result.registered) {
 
     }
 
-    /* =====================================================
+/* =====================================================
  * 08-2. シフト本人認証テスト
  * ===================================================== */
 
@@ -1104,8 +1104,153 @@ async function checkShiftAuth() {
     `
   );
 
+
+  /*
+   * 本人認証成功後に
+   * 月間シフト取得テスト
+   */
+  await checkMonthlyShift();
+
 }
 
+/* =====================================================
+ * 08-3. 月間シフト取得テスト
+ * ===================================================== */
+
+async function checkMonthlyShift() {
+
+  const now =
+    new Date();
+
+  const year =
+    now.getFullYear();
+
+  const month =
+    now.getMonth() + 1;
+
+
+  const result =
+    await callApi({
+
+      action:
+        "getMonthlyShiftData",
+
+      idToken:
+        currentIdToken,
+
+      year:
+        year,
+
+      month:
+        month
+
+    });
+
+
+  if (!result.success) {
+
+    throw new Error(
+      result.error ||
+      "月間シフト取得に失敗しました"
+    );
+
+  }
+
+
+  const app =
+    document.getElementById(
+      "app"
+    );
+
+
+  const cast =
+    result.cast || {};
+
+
+  const entries =
+    result.entries || [];
+
+
+  app.insertAdjacentHTML(
+    "beforeend",
+    `
+
+      <div
+        style="
+          margin-top:20px;
+          padding-top:18px;
+          border-top:1px solid #eee;
+          text-align:center;
+        "
+      >
+
+        <div
+          style="
+            font-size:12px;
+            color:#999;
+            margin-bottom:8px;
+          "
+        >
+          MONTHLY SHIFT TEST
+        </div>
+
+
+        <div
+          style="
+            font-size:14px;
+            font-weight:700;
+          "
+        >
+          ✓ 月間シフト取得成功
+        </div>
+
+
+        <div
+          style="
+            margin-top:8px;
+            font-size:13px;
+            line-height:1.8;
+            color:#666;
+          "
+        >
+
+          本人：
+          ${escapeHtml(
+            cast.castId || ""
+          )}
+          /
+          ${escapeHtml(
+            cast.castName || ""
+          )}
+
+          <br>
+
+          対象月：
+          ${year}年${month}月
+
+          <br>
+
+          シフト件数：
+          ${entries.length}件
+
+          <br>
+
+          提出済み：
+          ${
+            result.submitted
+              ? "はい"
+              : "いいえ"
+          }
+
+        </div>
+
+      </div>
+
+    `
+  );
+
+}
+    
     /* =====================================================
      * 09. API通信
      * ===================================================== */
