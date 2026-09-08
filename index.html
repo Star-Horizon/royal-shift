@@ -444,27 +444,32 @@
 
       }
 
+if (result.registered) {
 
-      if (result.registered) {
-
-        showRegistered(
-          result.cast
-        );
-
-
-        if (
-          result.cast &&
-          result.cast.isAdmin
-        ) {
-
-          await loadAdminRequests();
-
-        }
+  showRegistered(
+    result.cast
+  );
 
 
-        return;
+  /*
+   * シフト側でも本人認証できるか確認
+   */
+  await checkShiftAuth();
 
-      }
+
+  if (
+    result.cast &&
+    result.cast.isAdmin
+  ) {
+
+    await loadAdminRequests();
+
+  }
+
+
+  return;
+
+}
 
 
       currentLineDisplayName =
@@ -990,6 +995,116 @@
 
     }
 
+    /* =====================================================
+ * 08-2. シフト本人認証テスト
+ * ===================================================== */
+
+async function checkShiftAuth() {
+
+  const result =
+    await callApi({
+
+      action:
+        "shiftAuthTest",
+
+      idToken:
+        currentIdToken
+
+    });
+
+
+  if (!result.success) {
+
+    throw new Error(
+      result.error ||
+      "シフト本人認証に失敗しました"
+    );
+
+  }
+
+
+  const user =
+    result.user || {};
+
+
+  const app =
+    document.getElementById(
+      "app"
+    );
+
+
+  app.insertAdjacentHTML(
+    "beforeend",
+    `
+
+      <div
+        style="
+          margin-top:20px;
+          padding-top:18px;
+          border-top:1px solid #eee;
+          text-align:center;
+        "
+      >
+
+        <div
+          style="
+            font-size:12px;
+            color:#999;
+            margin-bottom:8px;
+          "
+        >
+          SHIFT AUTH TEST
+        </div>
+
+
+        <div
+          style="
+            font-size:14px;
+            font-weight:700;
+          "
+        >
+          ✓ シフト本人認証成功
+        </div>
+
+
+        <div
+          style="
+            margin-top:8px;
+            font-size:13px;
+            line-height:1.8;
+            color:#666;
+          "
+        >
+
+          CAST ID：
+          ${escapeHtml(
+            user.castId || ""
+          )}
+
+          <br>
+
+          キャスト名：
+          ${escapeHtml(
+            user.castName || ""
+          )}
+
+          <br>
+
+          権限：
+          ${
+            user.isAdmin
+              ? "管理者"
+              : "一般"
+          }
+
+        </div>
+
+      </div>
+
+    `
+  );
+
+}
 
     /* =====================================================
      * 09. API通信
