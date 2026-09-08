@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
   <meta charset="UTF-8">
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    content="width=device-width, initial-scale=1.0"
   >
 
   <title>ROYAL SHIFT</title>
 
-  <!-- LIFF SDK -->
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <script
+    src="https://static.line-scdn.net/liff/edge/2/sdk.js">
+  </script>
 
   <style>
 
@@ -22,11 +22,7 @@
 
     body {
       margin: 0;
-
-      min-height: 100vh;
-
-      background: #111111;
-      color: #ffffff;
+      padding: 0;
 
       font-family:
         -apple-system,
@@ -34,231 +30,258 @@
         "Helvetica Neue",
         Arial,
         sans-serif;
+
+      background:
+        #f4f5f7;
+
+      color:
+        #222;
     }
 
 
     .container {
       width: 100%;
-      max-width: 520px;
+      max-width: 480px;
 
       margin: 0 auto;
 
       padding:
-        60px
-        24px
-        40px;
+        24px 16px 60px;
     }
 
 
     .logo {
       text-align: center;
 
-      font-family:
-        Georgia,
-        serif;
+      font-size: 28px;
+      font-weight: 800;
 
-      font-size: 64px;
+      letter-spacing: 2px;
+
+      margin:
+        12px 0 6px;
+    }
+
+
+    .sub-title {
+      text-align: center;
+
+      color: #777;
+
+      font-size: 13px;
+
+      margin-bottom: 28px;
+    }
+
+
+    .card {
+      background: #fff;
+
+      border-radius: 18px;
+
+      padding: 24px 20px;
+
+      box-shadow:
+        0 4px 18px
+        rgba(0, 0, 0, 0.06);
 
       margin-bottom: 16px;
     }
 
 
-    .title {
-      text-align: center;
+    .status-icon {
+      width: 64px;
+      height: 64px;
 
-      font-size: 18px;
-      font-weight: 700;
+      margin:
+        0 auto 18px;
 
-      letter-spacing: 8px;
+      border-radius: 50%;
 
-      margin-bottom: 48px;
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      font-size: 30px;
     }
 
 
-    .card {
-      background: #1b1b1b;
-
-      border-radius: 18px;
-
-      padding: 24px;
+    .status-icon.success {
+      background: #e9f8ee;
     }
 
 
-    .status {
-      text-align: center;
-
-      color: #aaaaaa;
-
-      font-size: 14px;
-
-      line-height: 1.7;
+    .status-icon.pending {
+      background: #fff4d8;
     }
 
 
-    .line-name {
+    .status-icon.error {
+      background: #ffe8e8;
+    }
+
+
+    h1 {
+      margin:
+        0 0 10px;
+
       text-align: center;
 
       font-size: 22px;
-      font-weight: 700;
-
-      margin-top: 10px;
-    }
-
-
-    .section-title {
-      font-size: 20px;
-      font-weight: 700;
-
-      margin-bottom: 8px;
     }
 
 
     .description {
-      color: #aaaaaa;
+      margin:
+        0 0 24px;
+
+      text-align: center;
 
       font-size: 14px;
 
       line-height: 1.7;
 
-      margin-bottom: 24px;
+      color: #666;
     }
 
 
-    .field-label {
-      display: block;
+    .user-name {
+      text-align: center;
 
-      font-size: 13px;
-
-      color: #bbbbbb;
+      font-size: 26px;
+      font-weight: 700;
 
       margin-bottom: 8px;
     }
 
 
-    .input {
+    .cast-id {
+      text-align: center;
+
+      color: #777;
+
+      font-size: 14px;
+
+      margin-bottom: 16px;
+    }
+
+
+    .badge {
+      display: table;
+
+      margin: 0 auto;
+
+      padding:
+        6px 14px;
+
+      border-radius: 999px;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      background: #222;
+      color: #fff;
+    }
+
+
+    .form-group {
+      margin-top: 20px;
+    }
+
+
+    label {
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-size: 14px;
+
+      font-weight: 700;
+    }
+
+
+    input {
       width: 100%;
+
       height: 52px;
 
-      padding: 0 16px;
+      border:
+        1px solid #ddd;
 
-      border: 1px solid #444444;
       border-radius: 12px;
 
-      background: #111111;
-      color: #ffffff;
+      padding:
+        0 14px;
 
-      font-size: 18px;
+      font-size: 16px;
 
       outline: none;
+
+      background: #fff;
     }
 
 
-    .input:focus {
-      border-color: #ffffff;
+    input:focus {
+      border-color: #222;
     }
 
 
-    .button {
+    button {
       width: 100%;
+
       height: 54px;
 
-      margin-top: 20px;
+      margin-top: 18px;
 
       border: none;
-      border-radius: 12px;
 
-      background: #ffffff;
-      color: #111111;
+      border-radius: 12px;
 
       font-size: 16px;
       font-weight: 700;
 
       cursor: pointer;
+
+      background: #222;
+      color: #fff;
     }
 
 
-    .button:disabled {
-      opacity: 0.45;
+    button:disabled {
+      opacity: 0.5;
 
       cursor: default;
     }
 
 
-    .success-box {
-      text-align: center;
-    }
-
-
-    .success-title {
-      font-size: 22px;
-      font-weight: 700;
-
-      margin-bottom: 12px;
-    }
-
-
-    .cast-name {
-      font-size: 30px;
-      font-weight: 700;
-
-      margin: 24px 0 8px;
-    }
-
-
-    .cast-id {
-      color: #aaaaaa;
-
-      font-size: 14px;
-    }
-
-
-    .admin-badge {
-      display: inline-block;
-
-      margin-top: 20px;
-
-      padding: 8px 14px;
-
-      border: 1px solid #666666;
-      border-radius: 999px;
-
-      font-size: 12px;
-    }
-
-
-    .error {
-      color: #ff8a8a;
-
-      text-align: center;
-
-      line-height: 1.7;
-    }
-
-
-    .hidden {
-      display: none;
-    }
-
-
     .loading {
-      width: 30px;
-      height: 30px;
+      text-align: center;
+
+      padding:
+        50px 20px;
+
+      color: #666;
+    }
+
+
+    .spinner {
+      width: 38px;
+      height: 38px;
 
       margin:
-        0
-        auto
-        20px;
+        0 auto 18px;
 
-      border: 3px solid #444444;
-      border-top-color: #ffffff;
+      border:
+        4px solid #ddd;
+
+      border-top-color: #222;
 
       border-radius: 50%;
 
       animation:
-        spin
-        0.8s
-        linear
-        infinite;
+        spin 0.8s linear infinite;
     }
 
 
@@ -271,157 +294,77 @@
 
     }
 
+
+    .error-message {
+      margin-top: 14px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      background: #fff0f0;
+
+      color: #c62828;
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+
+    .line-name {
+      margin-top: 20px;
+
+      padding-top: 18px;
+
+      border-top:
+        1px solid #eee;
+
+      text-align: center;
+
+      font-size: 12px;
+
+      color: #999;
+    }
+
+
+    .hidden {
+      display: none;
+    }
+
   </style>
 </head>
 
 
 <body>
 
-  <main class="container">
+  <div class="container">
 
     <div class="logo">
-      R
-    </div>
-
-
-    <div class="title">
       ROYAL SHIFT
     </div>
 
+    <div class="sub-title">
+      ROYAL STAFF SYSTEM
+    </div>
 
-    <!-- 認証中 -->
-    <section
-      id="loadingView"
+
+    <div
+      id="app"
       class="card"
     >
 
-      <div class="loading"></div>
+      <div class="loading">
 
-      <div
-        id="loadingText"
-        class="status"
-      >
+        <div class="spinner"></div>
+
         LINE認証中...
-      </div>
-
-    </section>
-
-
-    <!-- 初回登録 -->
-    <section
-      id="registerView"
-      class="card hidden"
-    >
-
-      <div class="section-title">
-        初回登録
-      </div>
-
-
-      <div class="description">
-        ROYAL SHIFTを利用するために、
-        お名前を入力してください。
-      </div>
-
-
-      <div class="status">
-        LINEアカウント
-      </div>
-
-
-      <div
-        id="lineDisplayName"
-        class="line-name"
-      ></div>
-
-
-      <div style="height: 28px;"></div>
-
-
-      <label
-        class="field-label"
-        for="castName"
-      >
-        お名前
-      </label>
-
-
-      <input
-        id="castName"
-        class="input"
-        type="text"
-        autocomplete="name"
-        placeholder="例：拓弥"
-      >
-
-
-      <button
-        id="registerButton"
-        class="button"
-        type="button"
-      >
-        登録する
-      </button>
-
-    </section>
-
-
-    <!-- 登録済み -->
-    <section
-      id="successView"
-      class="card hidden"
-    >
-
-      <div class="success-box">
-
-        <div class="success-title">
-          LINE認証成功
-        </div>
-
-
-        <div class="status">
-          ROYAL SHIFTへようこそ
-        </div>
-
-
-        <div
-          id="castNameDisplay"
-          class="cast-name"
-        ></div>
-
-
-        <div
-          id="castIdDisplay"
-          class="cast-id"
-        ></div>
-
-
-        <div
-          id="adminBadge"
-          class="admin-badge hidden"
-        >
-          管理者
-        </div>
 
       </div>
 
-    </section>
+    </div>
 
-
-    <!-- エラー -->
-    <section
-      id="errorView"
-      class="card hidden"
-    >
-
-      <div
-        id="errorMessage"
-        class="error"
-      ></div>
-
-    </section>
-
-  </main>
+  </div>
 
 
   <script>
@@ -442,11 +385,21 @@
       "";
 
 
+    let currentLineDisplayName =
+      "";
+
+
     /* =====================================================
      * 02. 起動
      * ===================================================== */
 
-    async function startApp() {
+    window.addEventListener(
+      "load",
+      initializeApp
+    );
+
+
+    async function initializeApp() {
 
       try {
 
@@ -460,11 +413,6 @@
           !liff.isLoggedIn()
         ) {
 
-          setLoadingText(
-            "LINEログインへ移動します..."
-          );
-
-
           liff.login();
 
           return;
@@ -472,9 +420,6 @@
         }
 
 
-        /*
-         * IDトークン取得
-         */
         currentIdToken =
           liff.getIDToken();
 
@@ -484,72 +429,16 @@
         ) {
 
           throw new Error(
-            "LINE IDトークンを取得できませんでした"
+            "LINE認証情報を取得できませんでした"
           );
 
         }
 
 
-        setLoadingText(
-          "登録情報を確認しています..."
-        );
-
-
-        /*
-         * GAS側でLINE認証
-         */
-        const result =
-          await callGasApi(
-            "authStatus",
-            {
-              idToken:
-                currentIdToken
-            }
-          );
-
-
-        if (
-          !result.success
-        ) {
-
-          throw new Error(
-            result.error ||
-            "認証に失敗しました"
-          );
-
-        }
-
-
-        /*
-         * 登録済み
-         */
-        if (
-          result.registered
-        ) {
-
-          showSuccess(
-            result.cast
-          );
-
-          return;
-
-        }
-
-
-        /*
-         * 未登録
-         */
-        showRegister(
-          result.lineDisplayName || ""
-        );
+        await checkAuthStatus();
 
 
       } catch (error) {
-
-        console.error(
-          error
-        );
-
 
         showError(
           error.message ||
@@ -562,40 +451,253 @@
 
 
     /* =====================================================
-     * 03. GAS API
+     * 03. 認証状態確認
      * ===================================================== */
 
-    async function callGasApi(
-      action,
-      data
-    ) {
+    async function checkAuthStatus() {
 
-      /*
-       * GAS Web AppはPOST後に
-       * googleusercontentへリダイレクトするため、
-       * application/jsonのPOSTではなく
-       * simple requestになる形式で送る。
-       */
-      const payload =
-        new URLSearchParams();
-
-
-      payload.append(
-        "action",
-        action
+      showLoading(
+        "登録情報を確認しています..."
       );
 
 
+      const result =
+        await callApi({
+
+          action:
+            "authStatus",
+
+          idToken:
+            currentIdToken
+
+        });
+
+
+      if (
+        !result.success
+      ) {
+
+        throw new Error(
+          result.error ||
+          "認証状態を確認できませんでした"
+        );
+
+      }
+
+
+      /*
+       * 登録済み
+       */
+      if (
+        result.registered
+      ) {
+
+        showRegistered(
+          result.cast
+        );
+
+        return;
+
+      }
+
+
+      currentLineDisplayName =
+        result.lineDisplayName || "";
+
+
+      /*
+       * 承認待ち
+       */
+      if (
+        result.pending
+      ) {
+
+        showPending(
+          result.pendingRequest
+        );
+
+        return;
+
+      }
+
+
+      /*
+       * 未登録
+       */
+      showRegistrationForm();
+
+    }
+
+
+    /* =====================================================
+     * 04. 登録申請
+     * ===================================================== */
+
+    async function submitRegistration() {
+
+      const input =
+        document.getElementById(
+          "castName"
+        );
+
+
+      const button =
+        document.getElementById(
+          "submitButton"
+        );
+
+
+      const errorArea =
+        document.getElementById(
+          "formError"
+        );
+
+
+      const castName =
+        String(
+          input.value || ""
+        ).trim();
+
+
+      errorArea.innerHTML =
+        "";
+
+
+      errorArea.classList.add(
+        "hidden"
+      );
+
+
+      if (
+        !castName
+      ) {
+
+        errorArea.textContent =
+          "お名前を入力してください";
+
+
+        errorArea.classList.remove(
+          "hidden"
+        );
+
+
+        return;
+
+      }
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "申請中...";
+
+
+      try {
+
+        const result =
+          await callApi({
+
+            action:
+              "submitRegistrationRequest",
+
+            idToken:
+              currentIdToken,
+
+            castName:
+              castName
+
+          });
+
+
+        if (
+          !result.success
+        ) {
+
+          throw new Error(
+            result.error ||
+            "登録申請に失敗しました"
+          );
+
+        }
+
+
+        /*
+         * すでに登録済みだった場合
+         */
+        if (
+          result.alreadyRegistered
+        ) {
+
+          await checkAuthStatus();
+
+          return;
+
+        }
+
+
+        /*
+         * 申請成功
+         */
+        showPending({
+
+          castName:
+            result.castName ||
+            castName,
+
+          status:
+            "承認待ち"
+
+        });
+
+
+      } catch (error) {
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "登録申請する";
+
+
+        errorArea.textContent =
+          error.message ||
+          String(error);
+
+
+        errorArea.classList.remove(
+          "hidden"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+     * 05. API通信
+     * ===================================================== */
+
+    async function callApi(
+      data
+    ) {
+
+      const params =
+        new URLSearchParams();
+
+
       Object.keys(
-        data || {}
+        data
       ).forEach(
         (key) => {
 
-          payload.append(
+          params.append(
             key,
-            String(
-              data[key] ?? ""
-            )
+            data[key] == null
+              ? ""
+              : String(data[key])
           );
 
         }
@@ -610,23 +712,9 @@
               "POST",
 
             body:
-              payload,
-
-            redirect:
-              "follow"
+              params
           }
         );
-
-
-      if (
-        !response.ok
-      ) {
-
-        throw new Error(
-          "サーバー通信に失敗しました"
-        );
-
-      }
 
 
       const text =
@@ -641,12 +729,6 @@
 
       } catch (error) {
 
-        console.error(
-          "GAS response:",
-          text
-        );
-
-
         throw new Error(
           "サーバーから正しい応答を取得できませんでした"
         );
@@ -657,312 +739,297 @@
 
 
     /* =====================================================
-     * 04. 初期管理者登録
+     * 06. 登録済み画面
      * ===================================================== */
 
-    async function registerInitialAdmin() {
+    function showRegistered(
+      cast
+    ) {
 
-      const input =
-        document.getElementById(
-          "castName"
-        );
+      const adminBadge =
+        cast.isAdmin
 
+          ? `
+            <div class="badge">
+              管理者
+            </div>
+          `
 
-      const button =
-        document.getElementById(
-          "registerButton"
-        );
-
-
-      const castName =
-        String(
-          input.value || ""
-        ).trim();
-
-
-      if (
-        !castName
-      ) {
-
-        alert(
-          "お名前を入力してください"
-        );
-
-        input.focus();
-
-        return;
-
-      }
+          : `
+            <div class="badge">
+              登録済み
+            </div>
+          `;
 
 
-      try {
+      document.getElementById(
+        "app"
+      ).innerHTML = `
 
-        button.disabled =
-          true;
+        <div class="status-icon success">
+          ✓
+        </div>
 
+        <h1>
+          LINE認証成功
+        </h1>
 
-        button.textContent =
-          "登録中...";
+        <div class="description">
+          ROYAL SHIFTにログインしました
+        </div>
 
+        <div class="user-name">
+          ${escapeHtml(
+            cast.castName || ""
+          )}
+        </div>
 
-        const result =
-          await callGasApi(
-            "registerInitialAdmin",
-            {
-              idToken:
-                currentIdToken,
+        <div class="cast-id">
+          CAST ID :
+          ${escapeHtml(
+            cast.castId || ""
+          )}
+        </div>
 
-              castName:
-                castName
-            }
-          );
+        ${adminBadge}
 
-
-        if (
-          !result.success
-        ) {
-
-          throw new Error(
-            result.error ||
-            "登録に失敗しました"
-          );
-
-        }
-
-
-        showSuccess(
-          result.cast
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        alert(
-          error.message ||
-          String(error)
-        );
-
-
-        button.disabled =
-          false;
-
-
-        button.textContent =
-          "登録する";
-
-      }
+      `;
 
     }
 
 
     /* =====================================================
-     * 05. 画面表示
+     * 07. 未登録画面
      * ===================================================== */
 
-    function hideAllViews() {
+    function showRegistrationForm() {
 
-      [
-        "loadingView",
-        "registerView",
-        "successView",
-        "errorView"
-      ].forEach(
-        (id) => {
+      document.getElementById(
+        "app"
+      ).innerHTML = `
 
-          document
-            .getElementById(id)
-            .classList
-            .add("hidden");
+        <div class="status-icon success">
+          ✓
+        </div>
 
+        <h1>
+          LINE認証成功
+        </h1>
+
+        <div class="description">
+          初回登録を行います。<br>
+          CASTに登録されている名前を入力してください。
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="castName">
+            キャスト名
+          </label>
+
+          <input
+            id="castName"
+            type="text"
+            placeholder="例：えま"
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <button
+          id="submitButton"
+          type="button"
+          onclick="submitRegistration()"
+        >
+          登録申請する
+        </button>
+
+
+        <div
+          id="formError"
+          class="error-message hidden"
+        ></div>
+
+
+        ${
+          currentLineDisplayName
+
+            ? `
+              <div class="line-name">
+                LINE：
+                ${escapeHtml(
+                  currentLineDisplayName
+                )}
+              </div>
+            `
+
+            : ""
         }
-      );
+
+      `;
 
     }
 
 
-    function setLoadingText(
-      text
+    /* =====================================================
+     * 08. 承認待ち画面
+     * ===================================================== */
+
+    function showPending(
+      request
     ) {
 
-      document
-        .getElementById(
-          "loadingText"
-        )
-        .textContent =
-          text;
+      const castName =
+        request &&
+        request.castName
+
+          ? request.castName
+
+          : "";
+
+
+      document.getElementById(
+        "app"
+      ).innerHTML = `
+
+        <div class="status-icon pending">
+          ⏳
+        </div>
+
+        <h1>
+          登録申請済み
+        </h1>
+
+        <div class="description">
+          登録申請を受け付けました。<br>
+          管理者の承認をお待ちください。
+        </div>
+
+
+        ${
+          castName
+
+            ? `
+              <div class="user-name">
+                ${escapeHtml(
+                  castName
+                )}
+              </div>
+            `
+
+            : ""
+        }
+
+
+        <div class="badge">
+          承認待ち
+        </div>
+
+      `;
 
     }
 
 
-    function showRegister(
-      lineDisplayName
+    /* =====================================================
+     * 09. ローディング
+     * ===================================================== */
+
+    function showLoading(
+      message
     ) {
 
-      hideAllViews();
+      document.getElementById(
+        "app"
+      ).innerHTML = `
 
+        <div class="loading">
 
-      document
-        .getElementById(
-          "registerView"
-        )
-        .classList
-        .remove("hidden");
+          <div class="spinner"></div>
 
+          ${escapeHtml(
+            message || "読み込み中..."
+          )}
 
-      document
-        .getElementById(
-          "lineDisplayName"
-        )
-        .textContent =
-          lineDisplayName ||
-          "LINEユーザー";
+        </div>
 
-
-      setTimeout(
-        () => {
-
-          document
-            .getElementById(
-              "castName"
-            )
-            .focus();
-
-        },
-        100
-      );
+      `;
 
     }
 
 
-    function showSuccess(
-      cast
-    ) {
-
-      hideAllViews();
-
-
-      document
-        .getElementById(
-          "successView"
-        )
-        .classList
-        .remove("hidden");
-
-
-      document
-        .getElementById(
-          "castNameDisplay"
-        )
-        .textContent =
-          cast.castName || "";
-
-
-      document
-        .getElementById(
-          "castIdDisplay"
-        )
-        .textContent =
-          cast.castId
-            ? "CAST ID : " +
-              cast.castId
-            : "";
-
-
-      const adminBadge =
-        document.getElementById(
-          "adminBadge"
-        );
-
-
-      if (
-        cast.isAdmin
-      ) {
-
-        adminBadge
-          .classList
-          .remove("hidden");
-
-      } else {
-
-        adminBadge
-          .classList
-          .add("hidden");
-
-      }
-
-    }
-
+    /* =====================================================
+     * 10. エラー
+     * ===================================================== */
 
     function showError(
       message
     ) {
 
-      hideAllViews();
+      document.getElementById(
+        "app"
+      ).innerHTML = `
 
+        <div class="status-icon error">
+          !
+        </div>
 
-      document
-        .getElementById(
-          "errorView"
-        )
-        .classList
-        .remove("hidden");
+        <h1>
+          エラー
+        </h1>
 
+        <div class="description">
+          ROYAL SHIFTを開けませんでした
+        </div>
 
-      document
-        .getElementById(
-          "errorMessage"
-        )
-        .textContent =
-          message;
+        <div class="error-message">
+          ${escapeHtml(
+            message ||
+            "不明なエラーが発生しました"
+          )}
+        </div>
+
+      `;
 
     }
 
 
     /* =====================================================
-     * 06. イベント
+     * 11. HTMLエスケープ
      * ===================================================== */
 
-    document
-      .getElementById(
-        "registerButton"
+    function escapeHtml(
+      value
+    ) {
+
+      return String(
+        value == null
+          ? ""
+          : value
       )
-      .addEventListener(
-        "click",
-        registerInitialAdmin
-      );
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
 
-
-    document
-      .getElementById(
-        "castName"
-      )
-      .addEventListener(
-        "keydown",
-        (event) => {
-
-          if (
-            event.key ===
-            "Enter"
-          ) {
-
-            registerInitialAdmin();
-
-          }
-
-        }
-      );
-
-
-    /* =====================================================
-     * 07. START
-     * ===================================================== */
-
-    startApp();
+    }
 
   </script>
 
