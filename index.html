@@ -10,12 +10,9 @@
 
   <title>ROYAL SHIFT</title>
 
-  <script
-    src="https://static.line-scdn.net/liff/edge/2/sdk.js">
-  </script>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -23,315 +20,290 @@
     body {
       margin: 0;
       padding: 0;
-
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Helvetica Neue",
-        Arial,
-        sans-serif;
-
-      background:
-        #f4f5f7;
-
-      color:
-        #222;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      background: #f4f5f7;
+      color: #222;
     }
-
 
     .container {
       width: 100%;
       max-width: 480px;
-
       margin: 0 auto;
-
-      padding:
-        24px 16px 60px;
+      padding: 24px 16px 60px;
     }
-
 
     .logo {
       text-align: center;
-
       font-size: 28px;
       font-weight: 800;
-
       letter-spacing: 2px;
-
-      margin:
-        12px 0 6px;
+      margin: 12px 0 6px;
     }
-
 
     .sub-title {
       text-align: center;
-
       color: #777;
-
       font-size: 13px;
-
       margin-bottom: 28px;
     }
 
-
     .card {
       background: #fff;
-
       border-radius: 18px;
-
       padding: 24px 20px;
-
-      box-shadow:
-        0 4px 18px
-        rgba(0, 0, 0, 0.06);
-
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
       margin-bottom: 16px;
     }
-
 
     .status-icon {
       width: 64px;
       height: 64px;
-
-      margin:
-        0 auto 18px;
-
+      margin: 0 auto 18px;
       border-radius: 50%;
-
       display: flex;
-
       align-items: center;
       justify-content: center;
-
       font-size: 30px;
     }
-
 
     .status-icon.success {
       background: #e9f8ee;
     }
 
-
     .status-icon.pending {
       background: #fff4d8;
     }
-
 
     .status-icon.error {
       background: #ffe8e8;
     }
 
-
     h1 {
-      margin:
-        0 0 10px;
-
+      margin: 0 0 10px;
       text-align: center;
-
       font-size: 22px;
     }
 
+    h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+    }
 
     .description {
-      margin:
-        0 0 24px;
-
+      margin: 0 0 24px;
       text-align: center;
-
       font-size: 14px;
-
       line-height: 1.7;
-
       color: #666;
     }
 
-
     .user-name {
       text-align: center;
-
       font-size: 26px;
       font-weight: 700;
-
       margin-bottom: 8px;
     }
 
-
     .cast-id {
       text-align: center;
-
       color: #777;
-
       font-size: 14px;
-
       margin-bottom: 16px;
     }
 
-
     .badge {
       display: table;
-
       margin: 0 auto;
-
-      padding:
-        6px 14px;
-
+      padding: 6px 14px;
       border-radius: 999px;
-
       font-size: 13px;
-
       font-weight: 700;
-
       background: #222;
       color: #fff;
     }
-
 
     .form-group {
       margin-top: 20px;
     }
 
-
     label {
       display: block;
-
       margin-bottom: 8px;
-
       font-size: 14px;
-
       font-weight: 700;
     }
 
-
     input {
       width: 100%;
-
       height: 52px;
-
-      border:
-        1px solid #ddd;
-
+      border: 1px solid #ddd;
       border-radius: 12px;
-
-      padding:
-        0 14px;
-
+      padding: 0 14px;
       font-size: 16px;
-
       outline: none;
-
       background: #fff;
     }
-
 
     input:focus {
       border-color: #222;
     }
 
-
     button {
       width: 100%;
-
-      height: 54px;
-
-      margin-top: 18px;
-
+      min-height: 50px;
       border: none;
-
       border-radius: 12px;
-
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
-
       cursor: pointer;
+    }
 
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+
+    .primary-button {
+      margin-top: 18px;
       background: #222;
       color: #fff;
     }
 
-
-    button:disabled {
-      opacity: 0.5;
-
-      cursor: default;
-    }
-
-
     .loading {
       text-align: center;
-
-      padding:
-        50px 20px;
-
+      padding: 50px 20px;
       color: #666;
     }
-
 
     .spinner {
       width: 38px;
       height: 38px;
-
-      margin:
-        0 auto 18px;
-
-      border:
-        4px solid #ddd;
-
+      margin: 0 auto 18px;
+      border: 4px solid #ddd;
       border-top-color: #222;
-
       border-radius: 50%;
-
-      animation:
-        spin 0.8s linear infinite;
+      animation: spin 0.8s linear infinite;
     }
-
 
     @keyframes spin {
-
       to {
-        transform:
-          rotate(360deg);
+        transform: rotate(360deg);
       }
-
     }
-
 
     .error-message {
       margin-top: 14px;
-
       padding: 12px;
-
       border-radius: 10px;
-
       background: #fff0f0;
-
       color: #c62828;
-
       font-size: 13px;
-
       line-height: 1.6;
     }
 
-
     .line-name {
       margin-top: 20px;
-
       padding-top: 18px;
-
-      border-top:
-        1px solid #eee;
-
+      border-top: 1px solid #eee;
       text-align: center;
-
       font-size: 12px;
-
       color: #999;
     }
-
 
     .hidden {
       display: none;
     }
 
+
+    /* =====================================================
+     * 管理者画面
+     * ===================================================== */
+
+    .admin-card {
+      margin-top: 16px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .admin-header h2 {
+      margin: 0;
+    }
+
+    .request-count {
+      min-width: 28px;
+      height: 28px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #222;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .request-item {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .request-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .request-cast-id {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .request-info {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #666;
+    }
+
+    .request-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .approve-button {
+      background: #222;
+      color: #fff;
+    }
+
+    .reject-button {
+      background: #eee;
+      color: #444;
+    }
+
+    .empty-requests {
+      text-align: center;
+      color: #999;
+      font-size: 14px;
+      padding: 24px 10px 10px;
+    }
+
+    .admin-error {
+      padding: 12px;
+      background: #fff0f0;
+      color: #c62828;
+      border-radius: 10px;
+      font-size: 13px;
+    }
   </style>
 </head>
 
@@ -353,16 +325,17 @@
       id="app"
       class="card"
     >
-
       <div class="loading">
-
         <div class="spinner"></div>
-
         LINE認証中...
-
       </div>
-
     </div>
+
+
+    <div
+      id="adminArea"
+      class="hidden"
+    ></div>
 
   </div>
 
@@ -381,12 +354,8 @@
       "https://script.google.com/macros/s/AKfycbwSZZNbraag8jTLbZbqoXbq9UDQfCeIwA404xkEcVP9l5UZ-7-cCdQCNVXKVq7wqo8pNg/exec";
 
 
-    let currentIdToken =
-      "";
-
-
-    let currentLineDisplayName =
-      "";
+    let currentIdToken = "";
+    let currentLineDisplayName = "";
 
 
     /* =====================================================
@@ -404,17 +373,13 @@
       try {
 
         await liff.init({
-          liffId:
-            LIFF_ID
+          liffId: LIFF_ID
         });
 
 
-        if (
-          !liff.isLoggedIn()
-        ) {
+        if (!liff.isLoggedIn()) {
 
           liff.login();
-
           return;
 
         }
@@ -424,9 +389,7 @@
           liff.getIDToken();
 
 
-        if (
-          !currentIdToken
-        ) {
+        if (!currentIdToken) {
 
           throw new Error(
             "LINE認証情報を取得できませんでした"
@@ -464,8 +427,7 @@
       const result =
         await callApi({
 
-          action:
-            "authStatus",
+          action: "authStatus",
 
           idToken:
             currentIdToken
@@ -473,9 +435,7 @@
         });
 
 
-      if (
-        !result.success
-      ) {
+      if (!result.success) {
 
         throw new Error(
           result.error ||
@@ -485,16 +445,22 @@
       }
 
 
-      /*
-       * 登録済み
-       */
-      if (
-        result.registered
-      ) {
+      if (result.registered) {
 
         showRegistered(
           result.cast
         );
+
+
+        if (
+          result.cast &&
+          result.cast.isAdmin
+        ) {
+
+          await loadAdminRequests();
+
+        }
+
 
         return;
 
@@ -505,12 +471,7 @@
         result.lineDisplayName || "";
 
 
-      /*
-       * 承認待ち
-       */
-      if (
-        result.pending
-      ) {
+      if (result.pending) {
 
         showPending(
           result.pendingRequest
@@ -521,9 +482,6 @@
       }
 
 
-      /*
-       * 未登録
-       */
       showRegistrationForm();
 
     }
@@ -559,39 +517,26 @@
         ).trim();
 
 
-      errorArea.innerHTML =
-        "";
+      errorArea.innerHTML = "";
+      errorArea.classList.add("hidden");
 
 
-      errorArea.classList.add(
-        "hidden"
-      );
-
-
-      if (
-        !castName
-      ) {
+      if (!castName) {
 
         errorArea.textContent =
           "お名前を入力してください";
 
-
         errorArea.classList.remove(
           "hidden"
         );
-
 
         return;
 
       }
 
 
-      button.disabled =
-        true;
-
-
-      button.textContent =
-        "申請中...";
+      button.disabled = true;
+      button.textContent = "申請中...";
 
 
       try {
@@ -611,9 +556,7 @@
           });
 
 
-        if (
-          !result.success
-        ) {
+        if (!result.success) {
 
           throw new Error(
             result.error ||
@@ -623,23 +566,16 @@
         }
 
 
-        /*
-         * すでに登録済みだった場合
-         */
         if (
           result.alreadyRegistered
         ) {
 
           await checkAuthStatus();
-
           return;
 
         }
 
 
-        /*
-         * 申請成功
-         */
         showPending({
 
           castName:
@@ -654,18 +590,13 @@
 
       } catch (error) {
 
-        button.disabled =
-          false;
-
-
+        button.disabled = false;
         button.textContent =
           "登録申請する";
-
 
         errorArea.textContent =
           error.message ||
           String(error);
-
 
         errorArea.classList.remove(
           "hidden"
@@ -677,7 +608,391 @@
 
 
     /* =====================================================
-     * 05. API通信
+     * 05. 管理者：申請一覧取得
+     * ===================================================== */
+
+    async function loadAdminRequests() {
+
+      const adminArea =
+        document.getElementById(
+          "adminArea"
+        );
+
+
+      adminArea.classList.remove(
+        "hidden"
+      );
+
+
+      adminArea.innerHTML = `
+        <div class="card admin-card">
+          <div class="loading">
+            <div class="spinner"></div>
+            登録申請を確認しています...
+          </div>
+        </div>
+      `;
+
+
+      try {
+
+        const result =
+          await callApi({
+
+            action:
+              "getRegistrationRequests",
+
+            idToken:
+              currentIdToken
+
+          });
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.error ||
+            "登録申請を取得できませんでした"
+          );
+
+        }
+
+
+        renderAdminRequests(
+          result.requests || []
+        );
+
+
+      } catch (error) {
+
+        adminArea.innerHTML = `
+          <div class="card admin-card">
+            <div class="admin-error">
+              ${escapeHtml(
+                error.message ||
+                String(error)
+              )}
+            </div>
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+     * 06. 管理者：一覧表示
+     * ===================================================== */
+
+    function renderAdminRequests(
+      requests
+    ) {
+
+      const adminArea =
+        document.getElementById(
+          "adminArea"
+        );
+
+
+      let content = "";
+
+
+      if (
+        requests.length === 0
+      ) {
+
+        content = `
+          <div class="empty-requests">
+            現在、承認待ちの申請はありません
+          </div>
+        `;
+
+      } else {
+
+        requests.forEach(
+          (request) => {
+
+            content += `
+
+              <div class="request-item">
+
+                <div class="request-name">
+                  ${escapeHtml(
+                    request.castName || ""
+                  )}
+                </div>
+
+                <div class="request-cast-id">
+                  CAST ID :
+                  ${escapeHtml(
+                    request.castId || ""
+                  )}
+                </div>
+
+                <div class="request-info">
+
+                  LINE：
+                  ${escapeHtml(
+                    request.lineDisplayName || ""
+                  )}
+
+                  <br>
+
+                  申請日時：
+                  ${escapeHtml(
+                    request.requestedAt || ""
+                  )}
+
+                </div>
+
+
+                <div class="request-buttons">
+
+                  <button
+                    class="approve-button"
+                    onclick="approveRequest(
+                      '${escapeJs(
+                        request.requestId
+                      )}'
+                    )"
+                  >
+                    承認
+                  </button>
+
+
+                  <button
+                    class="reject-button"
+                    onclick="rejectRequest(
+                      '${escapeJs(
+                        request.requestId
+                      )}'
+                    )"
+                  >
+                    却下
+                  </button>
+
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        );
+
+      }
+
+
+      adminArea.innerHTML = `
+
+        <div class="card admin-card">
+
+          <div class="admin-header">
+
+            <h2>
+              登録申請
+            </h2>
+
+            <div class="request-count">
+              ${requests.length}
+            </div>
+
+          </div>
+
+          ${content}
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =====================================================
+     * 07. 管理者：承認
+     * ===================================================== */
+
+    async function approveRequest(
+      requestId
+    ) {
+
+      const confirmed =
+        window.confirm(
+          "この登録申請を承認しますか？"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      showAdminProcessing(
+        "承認しています..."
+      );
+
+
+      try {
+
+        const result =
+          await callApi({
+
+            action:
+              "approveRegistrationRequest",
+
+            idToken:
+              currentIdToken,
+
+            requestId:
+              requestId
+
+          });
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.error ||
+            "承認に失敗しました"
+          );
+
+        }
+
+
+        window.alert(
+          "登録を承認しました"
+        );
+
+
+        await loadAdminRequests();
+
+
+      } catch (error) {
+
+        window.alert(
+          error.message ||
+          String(error)
+        );
+
+
+        await loadAdminRequests();
+
+      }
+
+    }
+
+
+    /* =====================================================
+     * 08. 管理者：却下
+     * ===================================================== */
+
+    async function rejectRequest(
+      requestId
+    ) {
+
+      const confirmed =
+        window.confirm(
+          "この登録申請を却下しますか？"
+        );
+
+
+      if (!confirmed) {
+        return;
+      }
+
+
+      showAdminProcessing(
+        "却下しています..."
+      );
+
+
+      try {
+
+        const result =
+          await callApi({
+
+            action:
+              "rejectRegistrationRequest",
+
+            idToken:
+              currentIdToken,
+
+            requestId:
+              requestId,
+
+            note:
+              ""
+
+          });
+
+
+        if (!result.success) {
+
+          throw new Error(
+            result.error ||
+            "却下に失敗しました"
+          );
+
+        }
+
+
+        window.alert(
+          "登録申請を却下しました"
+        );
+
+
+        await loadAdminRequests();
+
+
+      } catch (error) {
+
+        window.alert(
+          error.message ||
+          String(error)
+        );
+
+
+        await loadAdminRequests();
+
+      }
+
+    }
+
+
+    function showAdminProcessing(
+      message
+    ) {
+
+      const adminArea =
+        document.getElementById(
+          "adminArea"
+        );
+
+
+      adminArea.innerHTML = `
+
+        <div class="card admin-card">
+
+          <div class="loading">
+
+            <div class="spinner"></div>
+
+            ${escapeHtml(
+              message
+            )}
+
+          </div>
+
+        </div>
+
+      `;
+
+    }
+
+
+    /* =====================================================
+     * 09. API通信
      * ===================================================== */
 
     async function callApi(
@@ -688,9 +1003,7 @@
         new URLSearchParams();
 
 
-      Object.keys(
-        data
-      ).forEach(
+      Object.keys(data).forEach(
         (key) => {
 
           params.append(
@@ -708,11 +1021,8 @@
         await fetch(
           GAS_API_URL,
           {
-            method:
-              "POST",
-
-            body:
-              params
+            method: "POST",
+            body: params
           }
         );
 
@@ -723,9 +1033,7 @@
 
       try {
 
-        return JSON.parse(
-          text
-        );
+        return JSON.parse(text);
 
       } catch (error) {
 
@@ -739,7 +1047,7 @@
 
 
     /* =====================================================
-     * 06. 登録済み画面
+     * 10. 登録済み画面
      * ===================================================== */
 
     function showRegistered(
@@ -799,10 +1107,17 @@
 
 
     /* =====================================================
-     * 07. 未登録画面
+     * 11. 未登録画面
      * ===================================================== */
 
     function showRegistrationForm() {
+
+      document.getElementById(
+        "adminArea"
+      ).classList.add(
+        "hidden"
+      );
+
 
       document.getElementById(
         "app"
@@ -840,6 +1155,7 @@
 
         <button
           id="submitButton"
+          class="primary-button"
           type="button"
           onclick="submitRegistration()"
         >
@@ -874,12 +1190,19 @@
 
 
     /* =====================================================
-     * 08. 承認待ち画面
+     * 12. 承認待ち
      * ===================================================== */
 
     function showPending(
       request
     ) {
+
+      document.getElementById(
+        "adminArea"
+      ).classList.add(
+        "hidden"
+      );
+
 
       const castName =
         request &&
@@ -933,7 +1256,7 @@
 
 
     /* =====================================================
-     * 09. ローディング
+     * 13. ローディング / エラー
      * ===================================================== */
 
     function showLoading(
@@ -949,7 +1272,8 @@
           <div class="spinner"></div>
 
           ${escapeHtml(
-            message || "読み込み中..."
+            message ||
+            "読み込み中..."
           )}
 
         </div>
@@ -958,10 +1282,6 @@
 
     }
 
-
-    /* =====================================================
-     * 10. エラー
-     * ===================================================== */
 
     function showError(
       message
@@ -996,7 +1316,7 @@
 
 
     /* =====================================================
-     * 11. HTMLエスケープ
+     * 14. エスケープ
      * ===================================================== */
 
     function escapeHtml(
@@ -1008,26 +1328,28 @@
           ? ""
           : value
       )
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-        .replace(
-          /</g,
-          "&lt;"
-        )
-        .replace(
-          />/g,
-          "&gt;"
-        )
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-        .replace(
-          /'/g,
-          "&#039;"
-        );
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+    }
+
+
+    function escapeJs(
+      value
+    ) {
+
+      return String(
+        value == null
+          ? ""
+          : value
+      )
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/\r/g, "")
+        .replace(/\n/g, "");
 
     }
 
