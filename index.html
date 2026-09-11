@@ -73,6 +73,7 @@ let calendar=null,selectedDate="",selectedStatus="working",isSaving=false,isEndT
 let currentCastDefaults={defaultStartTime:"20:00",defaultEndTime:"01:00"};
 const shiftEntries={};
 let bulkMode="selectedDates",bulkStatus="working",bulkWeekdays=[],multiSelectedDates=[],isMultiSelectMode=false,isBulkSaving=false,isBulkEndTimeLast=false,toastTimer=null;
+let attendanceChangeDate="";
 
 window.addEventListener("load",initializeApp);
 async function initializeApp(){
@@ -104,12 +105,13 @@ async function startRegisteredApp(){
  const auth=await callApi({action:"shiftAuthTest",idToken:currentIdToken});
  if(!auth.success)throw new Error(auth.error||"シフト本人認証に失敗しました");
 
- // LINEの出勤確認ボタンから開かれた場合は、通常画面を出す前に処理する
+ // LINEの出勤確認ボタンから開かれた場合の処理
  const attendanceHandled=await handleAttendanceAction();
  if(attendanceHandled)return;
 
  document.getElementById("authView").classList.add("hidden");
  document.getElementById("shiftView").classList.remove("hidden");
+
  try{
   const d=await callApi({action:"getCurrentCastDefaultTimes",idToken:currentIdToken});
   if(d&&d.success!==false){
@@ -117,13 +119,22 @@ async function startRegisteredApp(){
    currentCastDefaults.defaultEndTime=normalizeTime(d.defaultEndTime,"01:00");
   }
  }catch(e){console.warn(e)}
+
  initializeManualInputs();
  initializeCalendar();
+
+ // 「変更あり」から開いた場合は対象日へ移動して、その日の編集画面を直接開く
+ if(attendanceChangeDate){
+  calendar.gotoDate(parseLocalDate(attendanceChangeDate));
+  await loadDisplayedMonth();
+  openShiftModal(attendanceChangeDate);
+ }
+
  if(currentCast&&currentCast.isAdmin)loadAdminRequests(); // admin UI remains available in auth area for later admin screen work
  setTimeout(hideLoading,350);
 }
 /* =====================================================
- * 当日出勤確認：出勤OK
+ * 当日出勤確認：URLアクション
  * ===================================================== */
 async function handleAttendanceAction(){
  const params=new URLSearchParams(window.location.search);
@@ -131,17 +142,28 @@ async function handleAttendanceAction(){
  const date=params.get("date");
 
  // 通常起動
- if(action!=="attendance-ok")return false;
-
- document.getElementById("authView").classList.remove("hidden");
- document.getElementById("shiftView").classList.add("hidden");
- showAuthLoading("出勤確認中...");
+ if(action!=="attendance-ok"&&action!=="attendance-change")return false;
 
  if(!date){
   hideLoading();
   showError("確認日を取得できませんでした");
   return true;
  }
+
+ // 「変更あり」は通常シフト画面へ進み、対象日の編集画面を直接開く
+ if(action==="attendance-change"){
+  attendanceChangeDate=date;
+
+  // 再読込で同じアクションが走らないようURLからクエリを消す
+  window.history.replaceState({},document.title,window.location.pathname);
+
+  return false;
+ }
+
+ // 「出勤OK」はその場で確認を完了する
+ document.getElementById("authView").classList.remove("hidden");
+ document.getElementById("shiftView").classList.add("hidden");
+ showAuthLoading("出勤確認中...");
 
  try{
   const r=await callApi({
@@ -249,6 +271,7 @@ function openShiftModal(date){
  const last=!!(e&&e.endTime==="LAST");setTime("end",last?currentCastDefaults.defaultEndTime:(e&&e.endTime?e.endTime:currentCastDefaults.defaultEndTime));setEndTimeLastState(last);
  document.getElementById("shiftNote").value=e?e.note||"":"";
  document.getElementById("clearDateButton").classList.toggle("hidden",!e);
+ document.getElementById("saveSelectedDateButton").textContent=attendanceChangeDate===date?"変更内容を保存":"この日の内容を保存";
  document.getElementById("shiftModal").classList.remove("hidden");document.body.classList.add("modal-open")
 }
 function closeShiftModal(){if(isSaving)return;document.getElementById("shiftModal").classList.add("hidden");document.body.classList.remove("modal-open")}
@@ -256,11 +279,74 @@ function selectStatus(s){selectedStatus=s;["working","holiday","undecided"].forE
 async function saveSelectedDate(){
  if(isSaving)return;let startTime="",endTime="";
  if(selectedStatus==="working"){startTime=getTime("start");endTime=isEndTimeLast?"LAST":getTime("end");if(!startTime||!endTime){showNotice("出勤時間と退勤時間を入力してください");return}}
- isSaving=true;const b=document.getElementById("saveSelectedDateButton");b.disabled=true;b.textContent="保存中...";
+
+ const isAttendanceChange=attendanceChangeDate===selectedDate;
+
+ isSaving=true;
+ const b=document.getElementById("saveSelectedDateButton");
+ b.disabled=true;
+ b.textContent="保存中...";
+
  try{
-  const r=await callApi({action:"saveShiftEntry",idToken:currentIdToken,date:selectedDate,status:selectedStatus,startTime,endTime,transport:false,note:document.getElementById("shiftNote").value});
-  if(!r.success)throw new Error(r.error||"保存に失敗しました");closeShiftModalForce();showNotice("保存しました");await loadDisplayedMonth()
- }catch(e){showNotice(e.message||String(e))}finally{isSaving=false;b.disabled=false;b.textContent="この日の内容を保存"}
+  // 先にシフト変更を保存
+  const r=await callApi({
+   action:"saveShiftEntry",
+   idToken:currentIdToken,
+   date:selectedDate,
+   status:selectedStatus,
+   startTime,
+   endTime,
+   transport:false,
+   note:document.getElementById("shiftNote").value
+  });
+
+  if(!r.success)throw new Error(r.error||"保存に失敗しました");
+
+  // LINEの「変更あり」から来た場合だけ、保存成功後に確認状態を更新
+  if(isAttendanceChange){
+   try{
+    const confirmation=await callApi({
+     action:"confirmAttendanceChange",
+     idToken:currentIdToken,
+     date:selectedDate
+    });
+
+    if(!confirmation||confirmation.success!==true){
+     throw new Error(
+      confirmation&&confirmation.error
+       ?confirmation.error
+       :"出勤確認の更新に失敗しました"
+     );
+    }
+
+    attendanceChangeDate="";
+
+   }catch(confirmError){
+    console.error(confirmError);
+    closeShiftModalForce();
+    await loadDisplayedMonth();
+    showNotice("シフトは保存済みですが、出勤確認の更新に失敗しました");
+    return;
+   }
+  }
+
+  closeShiftModalForce();
+
+  if(isAttendanceChange){
+   showNotice("変更内容を保存・確認しました");
+  }else{
+   showNotice("保存しました");
+  }
+
+  await loadDisplayedMonth();
+
+ }catch(e){
+  showNotice(e.message||String(e));
+ }finally{
+  isSaving=false;
+  b.disabled=false;
+  b.textContent=attendanceChangeDate===selectedDate?"変更内容を保存":"この日の内容を保存";
+ }
 }
 async function clearSelectedDate(){
  if(!confirm("この日の入力を削除しますか？"))return;
