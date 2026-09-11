@@ -3,13 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ROYAL SHIFT</title>
+  <title>CAST FLOW</title>
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.21/index.global.min.js"></script>
   <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   <style>
     :root{--black:#202020;--bg:#f4f5f7;--card:#fff;--text:#222;--soft:#777;--line:#e5e5e5;--work:#333;--holiday:#a95b5b;--undecided:#8a8a8a;--safe-bottom:env(safe-area-inset-bottom,0px)}
     *{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text)}
-    button,input,textarea{font:inherit}.hidden{display:none!important}.loading-screen{position:fixed;inset:0;z-index:9999;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.25s}.loading-screen.hide{opacity:0;pointer-events:none}.loading-logo{font-size:52px;font-weight:900}.loading-text{font-size:12px;letter-spacing:3px;margin-top:8px}
+    button,input,textarea{font:inherit}.hidden{display:none!important}.loading-screen{position:fixed;inset:0;z-index:9999;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.25s;padding:24px}.loading-screen.hide{opacity:0;pointer-events:none}
+    .loading-spinner{width:38px;height:38px;border:3px solid #ffffff25;border-top-color:#fff;border-radius:50%;animation:cfSpin .8s linear infinite;margin-bottom:22px}
+.loading-logo{font-size:26px;font-weight:900;letter-spacing:3px}
+.loading-text{font-size:12px;letter-spacing:1px;margin-top:10px;color:#cfcfcf;min-height:18px;text-align:center}
+.loading-dots{display:flex;gap:6px;margin-top:14px}
+.loading-dots i{display:block;width:6px;height:6px;border-radius:50%;background:#fff;animation:cfDot 1s ease-in-out infinite}
+.loading-dots i:nth-child(2){animation-delay:.15s}.loading-dots i:nth-child(3){animation-delay:.3s}
+@keyframes cfSpin{to{transform:rotate(360deg)}}
+@keyframes cfDot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}50%{opacity:1;transform:translateY(-4px)}}50%{opacity:1;transform:translateY(-4px)}}
     .auth-wrap{max-width:480px;margin:auto;padding:24px 16px 60px}.auth-logo{text-align:center;font-size:28px;font-weight:900;letter-spacing:2px;margin:12px 0 6px}.auth-sub{text-align:center;color:#777;font-size:13px;margin-bottom:28px}.auth-card,.admin-card{background:#fff;border-radius:18px;padding:24px 20px;box-shadow:0 4px 18px #0000000f;margin-bottom:16px}.spinner{width:38px;height:38px;margin:0 auto 18px;border:4px solid #ddd;border-top-color:#222;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.loading{text-align:center;padding:40px 10px;color:#666}.status-icon{width:64px;height:64px;margin:0 auto 18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;background:#e9f8ee}.status-icon.pending{background:#fff4d8}.status-icon.error{background:#ffe8e8}.auth-card h1{text-align:center;font-size:22px}.description{text-align:center;font-size:14px;line-height:1.7;color:#666}.user-name{text-align:center;font-size:26px;font-weight:800}.cast-id{text-align:center;color:#777;font-size:14px;margin:8px 0 16px}.badge{display:table;margin:auto;padding:6px 14px;border-radius:999px;background:#222;color:#fff;font-size:13px;font-weight:700}.form-group{margin-top:20px}.form-group label,.form-label{display:block;margin-bottom:8px;font-size:12px;font-weight:800}.form-group input,.form-control{width:100%;min-height:50px;border:1px solid #ddd;border-radius:12px;padding:0 14px;background:#fff}.primary-button{width:100%;min-height:50px;margin-top:18px;border:0;border-radius:12px;background:#222;color:#fff;font-weight:800}.error-message,.admin-error{margin-top:14px;padding:12px;border-radius:10px;background:#fff0f0;color:#c62828;font-size:13px}.admin-header{display:flex;justify-content:space-between;align-items:center}.request-count{background:#222;color:#fff;border-radius:99px;padding:6px 10px}.request-item{border:1px solid #e5e5e5;border-radius:14px;padding:16px;margin-top:12px}.request-name{font-size:20px;font-weight:800}.request-info,.request-cast-id{font-size:12px;color:#777;line-height:1.8}.request-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}.request-buttons button{min-height:44px;border:0;border-radius:10px;font-weight:800}.approve-button{background:#222;color:#fff}.reject-button{background:#eee}
     .app-header{position:sticky;top:0;z-index:100;background:#171717;color:#fff;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}.header-logo{font-size:19px;font-weight:900;letter-spacing:2px}.header-subtitle{font-size:8px;letter-spacing:1.8px;opacity:.55}.header-diamond-button{width:38px;height:38px;border:0;border-radius:10px;background:#2a2a2a}.header-diamond{display:block;width:9px;height:9px;background:#fff;transform:rotate(45deg);margin:auto}.main-content{max-width:720px;margin:auto;padding:22px 14px 90px}.shift-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px}.page-label,.modal-label{font-size:8px;letter-spacing:1.8px;color:#999}.shift-top h1{margin:3px 0 0;font-size:28px}.month-status{font-size:11px;font-weight:800;padding:7px 11px;background:#e8e8e8;border-radius:99px}.month-status.submitted{background:#222;color:#fff}.progress-card,.calendar-card{background:#fff;border-radius:17px;box-shadow:0 4px 18px #0000000b}.progress-card{padding:16px;margin-bottom:14px}.progress-header>div{display:flex;justify-content:space-between}.progress-header p{font-size:10px;color:#888}.progress-track{height:6px;background:#eee;border-radius:99px;overflow:hidden}.progress-bar{height:100%;width:0;background:#222;transition:.25s}.calendar-card{padding:12px 9px}.legend{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin:13px 0 17px;font-size:9px;color:#777}.legend-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}.working{background:#333}.holiday{background:#a95b5b}.undecided{background:#999}.empty{background:#ddd}.bulk-button,.submit-button{width:100%;min-height:50px;border-radius:13px;font-weight:800}.bulk-button{background:#fff;border:1px solid #ddd;margin-bottom:10px}.submit-button{background:#202020;color:#fff;border:0}.submit-button:disabled{opacity:.45}
     .fc{--fc-border-color:#ededed;--fc-today-bg-color:#f3f3f3}.fc .fc-toolbar-title{font-size:17px;font-weight:800}.fc .fc-button{background:#202020;border:0;border-radius:9px}.fc .fc-daygrid-day-frame{min-height:70px;padding:3px}.fc .fc-daygrid-day-number{font-size:11px;color:#333;text-decoration:none}.fc .fc-daygrid-event{font-size:8px;font-weight:800;text-align:center;border:0;border-radius:6px;padding:3px}.fc .fc-day-other{opacity:.35}.fc .multi-selected-day .fc-daygrid-day-frame{box-shadow:inset 0 0 0 2px #222;background:#efefef}
@@ -20,10 +28,15 @@
   </style>
 </head>
 <body>
-<div id="loadingScreen" class="loading-screen"><div class="loading-logo">R</div><div class="loading-text">ROYAL SHIFT</div></div>
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-spinner" aria-hidden="true"></div>
+  <div class="loading-logo">CAST FLOW</div>
+  <div id="loadingMessage" class="loading-text">LINEと接続しています…</div>
+  <div class="loading-dots"><i></i><i></i><i></i></div>
+</div>
 
 <div id="authView" class="auth-wrap">
-  <div class="auth-logo">ROYAL SHIFT</div><div class="auth-sub">ROYAL STAFF SYSTEM</div>
+  <div class="auth-logo">CAST FLOW</div><div class="auth-sub">CAST MANAGEMENT SYSTEM</div>
   <div id="authApp" class="auth-card"><div class="loading"><div class="spinner"></div>LINE認証中...</div></div>
   <div id="adminArea" class="hidden"></div>
 </div>
@@ -74,12 +87,23 @@ let currentCastDefaults={defaultStartTime:"20:00",defaultEndTime:"01:00"};
 const shiftEntries={};
 let bulkMode="selectedDates",bulkStatus="working",bulkWeekdays=[],multiSelectedDates=[],isMultiSelectMode=false,isBulkSaving=false,isBulkEndTimeLast=false,toastTimer=null;
 let attendanceChangeDate="";
+let suppressNextMonthAutoLoad=false;
 
 window.addEventListener("load",initializeApp);
+setTimeout(()=>{
+ const screen=document.getElementById("loadingScreen");
+ if(screen&&!screen.classList.contains("hide")){
+  setLoadingMessage("もう少しだけお待ちください");
+ }
+},3500);
 async function initializeApp(){
  try{
-  await liff.init({liffId:LIFF_ID});
-  if(!liff.isLoggedIn()){liff.login();return}
+  setLoadingMessage("LINEと接続しています…");
+  await liff.init({
+   liffId:LIFF_ID,
+   withLoginOnExternalBrowser:true
+  });
+  if(!liff.isInClient()&&!liff.isLoggedIn()){liff.login();return}
   currentIdToken=liff.getIDToken();
   if(!currentIdToken)throw new Error("LINE認証情報を取得できませんでした");
   await checkAuthStatus();
@@ -93,6 +117,7 @@ async function callApi(data){
  try{return JSON.parse(text)}catch(e){throw new Error("サーバーから正しい応答を取得できませんでした")}
 }
 async function checkAuthStatus(){
+ setLoadingMessage("登録情報を確認しています…");
  showAuthLoading("登録情報を確認しています...");
  const r=await callApi({action:"authStatus",idToken:currentIdToken});
  if(!r.success)throw new Error(r.error||"認証状態を確認できませんでした");
@@ -102,36 +127,45 @@ async function checkAuthStatus(){
  showRegistrationForm();hideLoading();
 }
 async function startRegisteredApp(){
- const auth=await callApi({action:"shiftAuthTest",idToken:currentIdToken});
- if(!auth.success)throw new Error(auth.error||"シフト本人認証に失敗しました");
-
- // LINEの出勤確認ボタンから開かれた場合の処理
+ // authStatusですでに本人認証＋CAST特定済みなので、shiftAuthTestを省略。
  const attendanceHandled=await handleAttendanceAction();
  if(attendanceHandled)return;
 
+ setLoadingMessage("シフトを準備しています…");
  document.getElementById("authView").classList.add("hidden");
  document.getElementById("shiftView").classList.remove("hidden");
 
- try{
-  const d=await callApi({action:"getCurrentCastDefaultTimes",idToken:currentIdToken});
+ initializeManualInputs();
+
+ // 初回カレンダー描画による二重読込を防止
+ suppressNextMonthAutoLoad=true;
+ initializeCalendar();
+
+ if(attendanceChangeDate){
+  suppressNextMonthAutoLoad=true;
+  calendar.gotoDate(parseLocalDate(attendanceChangeDate));
+ }
+
+ // デフォルト時間と月間シフトを同時に取得
+ const defaultsPromise=callApi({
+  action:"getCurrentCastDefaultTimes",
+  idToken:currentIdToken
+ }).then(d=>{
   if(d&&d.success!==false){
    currentCastDefaults.defaultStartTime=normalizeTime(d.defaultStartTime,"20:00");
    currentCastDefaults.defaultEndTime=normalizeTime(d.defaultEndTime,"01:00");
   }
- }catch(e){console.warn(e)}
+ }).catch(e=>console.warn(e));
 
- initializeManualInputs();
- initializeCalendar();
+ const monthPromise=loadDisplayedMonth();
+ await Promise.all([defaultsPromise,monthPromise]);
 
- // 「変更あり」から開いた場合は対象日へ移動して、その日の編集画面を直接開く
  if(attendanceChangeDate){
-  calendar.gotoDate(parseLocalDate(attendanceChangeDate));
-  await loadDisplayedMonth();
   openShiftModal(attendanceChangeDate);
  }
 
- if(currentCast&&currentCast.isAdmin)loadAdminRequests(); // admin UI remains available in auth area for later admin screen work
- setTimeout(hideLoading,350);
+ // 管理者申請一覧は通常起動時には取得しない
+ hideLoading();
 }
 /* =====================================================
  * 当日出勤確認：URLアクション
@@ -221,7 +255,6 @@ async function openNormalShiftScreen(){
 
  initializeManualInputs();
  initializeCalendar();
- if(currentCast&&currentCast.isAdmin)loadAdminRequests();
 }
 
 function initializeCalendar(){
@@ -231,7 +264,15 @@ function initializeCalendar(){
   headerToolbar:{left:"prev",center:"title",right:"next"},titleFormat:{year:"numeric",month:"long"},dayHeaderFormat:{weekday:"short"},
   dateClick:i=>{if(!isCurrentMonth(i.date))return;if(isMultiSelectMode)toggleMultiSelectedDate(i.dateStr);else openShiftModal(i.dateStr)},
   eventClick:i=>{i.jsEvent.preventDefault();i.jsEvent.stopPropagation();const d=i.event.startStr.slice(0,10);if(isMultiSelectMode)toggleMultiSelectedDate(d);else openShiftModal(d)},
-  datesSet:()=>{if(isMultiSelectMode)cancelMultiSelect();updateBulkTargetMonthText();setTimeout(loadDisplayedMonth,0)},
+  datesSet:()=>{
+   if(isMultiSelectMode)cancelMultiSelect();
+   updateBulkTargetMonthText();
+   if(suppressNextMonthAutoLoad){
+    suppressNextMonthAutoLoad=false;
+    return;
+   }
+   setTimeout(loadDisplayedMonth,0);
+  },
   dayCellDidMount:i=>applyMultiSelectClass(i.el,formatDateObject(i.date)),eventDisplay:"block",displayEventTime:false
  });
  calendar.render();
@@ -419,9 +460,10 @@ function parseLocalDate(s){const p=s.split("-").map(Number);return new Date(p[0]
 function formatDateObject(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`}
 function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
 function showNotice(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove("show"),3000)}
+function setLoadingMessage(msg){const el=document.getElementById("loadingMessage");if(el)el.textContent=msg||"読み込んでいます…"}
 function hideLoading(){document.getElementById("loadingScreen").classList.add("hide")}
 function showAuthLoading(msg){document.getElementById("authApp").innerHTML=`<div class="loading"><div class="spinner"></div>${escapeHtml(msg)}</div>`}
-function showError(msg){document.getElementById("authView").classList.remove("hidden");document.getElementById("shiftView").classList.add("hidden");document.getElementById("authApp").innerHTML=`<div class="status-icon error">!</div><h1>エラー</h1><div class="description">ROYAL SHIFTを開けませんでした</div><div class="error-message">${escapeHtml(msg)}</div>`}
+function showError(msg){document.getElementById("authView").classList.remove("hidden");document.getElementById("shiftView").classList.add("hidden");document.getElementById("authApp").innerHTML=`<div class="status-icon error">!</div><h1>エラー</h1><div class="description">CAST FLOWを開けませんでした</div><div class="error-message">${escapeHtml(msg)}</div>`}
 function showRegistrationForm(){document.getElementById("authApp").innerHTML=`<div class="status-icon">✓</div><h1>LINE認証成功</h1><div class="description">初回登録を行います。<br>CASTに登録されている名前を入力してください。</div><div class="form-group"><label>キャスト名</label><input id="castName" placeholder="例：えま" autocomplete="off"></div><button id="submitButton" class="primary-button" onclick="submitRegistration()">登録申請する</button><div id="formError" class="error-message hidden"></div>`}
 async function submitRegistration(){const input=document.getElementById("castName"),b=document.getElementById("submitButton"),er=document.getElementById("formError"),name=input.value.trim();if(!name){er.textContent="お名前を入力してください";er.classList.remove("hidden");return}b.disabled=true;b.textContent="申請中...";try{const r=await callApi({action:"submitRegistrationRequest",idToken:currentIdToken,castName:name});if(!r.success)throw new Error(r.error||"登録申請に失敗しました");if(r.alreadyRegistered){await checkAuthStatus();return}showPending({castName:r.castName||name})}catch(e){er.textContent=e.message||String(e);er.classList.remove("hidden");b.disabled=false;b.textContent="登録申請する"}}
 function showPending(r){document.getElementById("authApp").innerHTML=`<div class="status-icon pending">⏳</div><h1>登録申請済み</h1><div class="description">登録申請を受け付けました。<br>管理者の承認をお待ちください。</div>${r&&r.castName?`<div class="user-name">${escapeHtml(r.castName)}</div>`:""}<div class="badge">承認待ち</div>`}
