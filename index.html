@@ -35,6 +35,10 @@
     .visit-item-grid{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:8px;padding-right:34px}
     .visit-input{width:100%;min-width:0;height:44px;border:1px solid #ddd;border-radius:10px;padding:0 11px;background:#fff;font-size:13px}
     .visit-time{text-align:center;font-weight:800}
+
+    .visit-time-manual{display:grid;grid-template-columns:1fr 12px 1fr;align-items:center;height:44px;border:1px solid #ddd;border-radius:10px;background:#fff;overflow:hidden}
+    .visit-time-part{width:100%;min-width:0;height:42px;border:0;background:transparent;text-align:center;font-size:16px;font-weight:800;padding:0}
+    .visit-time-colon{text-align:center;font-weight:800}
     .visit-remove{position:absolute;right:10px;top:21px;width:28px;height:28px;border:0;border-radius:50%;background:#ddd;color:#555;font-size:18px;line-height:28px}
 
     @media(max-width:420px){.main-content{padding-left:12px;padding-right:12px}.fc .fc-daygrid-day-frame{min-height:65px}.modal-card{padding-left:16px;padding-right:16px}.visit-item-grid{grid-template-columns:minmax(0,1fr) 96px}}
@@ -405,6 +409,70 @@ function updateCustomerVisit(index,field,value){
  if(!customerVisits[index])return;
  customerVisits[index][field]=value;
 }
+
+function getVisitTimePart(time,part){
+ const m=String(time||"").match(/^(\d{1,2}):(\d{2})$/);
+ if(!m)return "";
+ return part==="hour"
+  ?m[1].padStart(2,"0")
+  :m[2];
+}
+
+function handleVisitTimeInput(index,part,el){
+ el.value=el.value.replace(/\D/g,"").slice(0,2);
+
+ const item=customerVisits[index];
+ if(!item)return;
+
+ const m=String(item.time||"").match(/^(\d{0,2}):(\d{0,2})$/);
+
+ let hour=m?m[1]:"";
+ let minute=m?m[2]:"";
+
+ if(part==="hour"){
+  hour=el.value;
+ }else{
+  minute=el.value;
+ }
+
+ item.time=
+  hour||minute
+   ?hour+":"+minute
+   :"";
+}
+
+function handleVisitTimeBlur(index,part,el){
+ if(el.value==="")return;
+
+ let n=Number(el.value);
+
+ if(part==="hour"){
+  if(n>29)n=29;
+ }else{
+  if(n>59)n=59;
+ }
+
+ el.value=String(n).padStart(2,"0");
+
+ const item=customerVisits[index];
+ if(!item)return;
+
+ const m=String(item.time||"").match(/^(\d{0,2}):(\d{0,2})$/);
+
+ let hour=m?m[1]:"";
+ let minute=m?m[2]:"";
+
+ if(part==="hour"){
+  hour=el.value;
+ }else{
+  minute=el.value;
+ }
+
+ item.time=
+  hour||minute
+   ?hour+":"+minute
+   :"";
+}
 function renderCustomerVisits(){
  const companionContainer=document.getElementById("companionVisitList");
  const visitContainer=document.getElementById("customerVisitList");
@@ -430,9 +498,27 @@ function buildCustomerVisitListHtml(items,emptyText){
     <input class="visit-input" type="text" maxlength="40" placeholder="顧客名"
      value="${escapeHtml(item.customerName||"")}"
      oninput="updateCustomerVisit(${item.originalIndex},'customerName',this.value)">
-    <input class="visit-input visit-time" type="time"
-     value="${escapeHtml(item.time||"")}"
-     oninput="updateCustomerVisit(${item.originalIndex},'time',this.value)">
+    <div class="visit-time-manual">
+     <input
+      class="visit-time-part"
+      inputmode="numeric"
+      maxlength="2"
+      placeholder="HH"
+      value="${escapeHtml(getVisitTimePart(item.time,'hour'))}"
+      oninput="handleVisitTimeInput(${item.originalIndex},'hour',this)"
+      onblur="handleVisitTimeBlur(${item.originalIndex},'hour',this)"
+     >
+     <span class="visit-time-colon">:</span>
+     <input
+      class="visit-time-part"
+      inputmode="numeric"
+      maxlength="2"
+      placeholder="MM"
+      value="${escapeHtml(getVisitTimePart(item.time,'minute'))}"
+      oninput="handleVisitTimeInput(${item.originalIndex},'minute',this)"
+      onblur="handleVisitTimeBlur(${item.originalIndex},'minute',this)"
+     >
+    </div>
    </div>
    <button type="button" class="visit-remove" onclick="removeCustomerVisit(${item.originalIndex})">×</button>
   </div>
@@ -465,6 +551,28 @@ async function saveSelectedDate(){
   if(!item.customerName){
    showNotice(item.type+"の顧客名を入力してください");
    return;
+  }
+
+  if(item.time){
+   const m=String(item.time).match(/^(\d{1,2}):(\d{1,2})$/);
+
+   if(!m){
+    showNotice(item.type+"の予定時間を正しく入力してください");
+    return;
+   }
+
+   const h=Number(m[1]);
+   const min=Number(m[2]);
+
+   if(h<0||h>29||min<0||min>59){
+    showNotice(item.type+"の予定時間を正しく入力してください");
+    return;
+   }
+
+   item.time=
+    String(h).padStart(2,"0")+
+    ":"+
+    String(min).padStart(2,"0");
   }
  }
 
