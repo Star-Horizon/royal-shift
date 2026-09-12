@@ -42,6 +42,20 @@
     .visit-remove{position:absolute;right:10px;top:21px;width:28px;height:28px;border:0;border-radius:50%;background:#ddd;color:#555;font-size:18px;line-height:28px}
 
     @media(max-width:420px){.main-content{padding-left:12px;padding-right:12px}.fc .fc-daygrid-day-frame{min-height:65px}.modal-card{padding-left:16px;padding-right:16px}.visit-item-grid{grid-template-columns:minmax(0,1fr) 96px}}
+
+    /* =====================================================
+     * 04-05. CAST FLOW ホーム・サイドメニュー
+     * ===================================================== */
+    .app-header-left{display:flex;align-items:center;gap:11px}
+    .menu-button{width:38px;height:38px;border:0;border-radius:10px;background:#2a2a2a;color:#fff;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;padding:0}
+    .menu-button span{display:block;width:17px;height:2px;border-radius:99px;background:#fff}
+    .home-view{min-height:calc(100vh - 66px)}
+    .home-hero{margin-bottom:22px}.home-hero-label{font-size:9px;letter-spacing:1.8px;color:#999}.home-hero h1{margin:5px 0 7px;font-size:30px}.home-hero p{margin:0;color:#777;font-size:12px;line-height:1.7}
+    .home-user-card{background:#202020;color:#fff;border-radius:19px;padding:20px;margin-bottom:14px}.home-user-label{font-size:9px;letter-spacing:1.6px;opacity:.55}.home-user-name{margin-top:6px;font-size:25px;font-weight:900}.home-user-id{margin-top:5px;font-size:11px;opacity:.55}
+    .home-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.home-menu-card{min-height:130px;border:0;border-radius:17px;background:#fff;box-shadow:0 4px 18px #0000000b;padding:17px;text-align:left;color:#222}.home-menu-card:active{transform:scale(.98)}.home-menu-icon{width:38px;height:38px;border-radius:11px;background:#222;color:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;margin-bottom:18px}.home-menu-card strong{display:block;font-size:15px}.home-menu-card small{display:block;margin-top:5px;color:#999;font-size:9px;line-height:1.5}
+    .drawer-overlay{position:fixed;inset:0;z-index:1200;background:#0008;opacity:0;pointer-events:none;transition:.22s}.drawer-overlay.open{opacity:1;pointer-events:auto}.side-drawer{position:absolute;left:0;top:0;bottom:0;width:min(82vw,330px);background:#fff;transform:translateX(-102%);transition:.25s ease;padding:calc(22px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px));overflow-y:auto}.drawer-overlay.open .side-drawer{transform:translateX(0)}
+    .drawer-brand{padding:5px 8px 21px}.drawer-logo{font-size:22px;font-weight:900;letter-spacing:2px}.drawer-system{margin-top:3px;color:#999;font-size:8px;letter-spacing:1.4px}.drawer-user{border-radius:14px;background:#f3f3f3;padding:13px 14px;margin-bottom:18px}.drawer-user-name{font-size:16px;font-weight:900}.drawer-user-id{margin-top:3px;font-size:9px;color:#999}.drawer-section-title{margin:18px 10px 8px;font-size:8px;color:#aaa;letter-spacing:1.5px;font-weight:900}.drawer-item{width:100%;min-height:48px;border:0;border-radius:11px;background:transparent;display:flex;align-items:center;gap:13px;padding:0 12px;text-align:left;font-weight:800;color:#333}.drawer-item:active,.drawer-item.active{background:#ededed}.drawer-item-icon{width:26px;text-align:center;font-size:17px}.drawer-divider{height:1px;background:#eee;margin:14px 7px}
+
   </style>
 </head>
 <body>
@@ -58,8 +72,43 @@
   <div id="adminArea" class="hidden"></div>
 </div>
 
+
+<!-- =====================================================
+     04. CAST FLOW ホーム
+===================================================== -->
+<div id="homeView" class="hidden">
+  <header class="app-header">
+    <div class="app-header-left">
+      <button class="menu-button" onclick="openDrawer()" aria-label="メニュー"><span></span><span></span><span></span></button>
+      <div><div class="header-logo">CAST FLOW</div><div class="header-subtitle">CAST MANAGEMENT SYSTEM</div></div>
+    </div>
+    <button class="header-diamond-button" onclick="showNotice('通知機能は準備中です')"><span class="header-diamond"></span></button>
+  </header>
+  <main class="main-content home-view">
+    <section>
+      <div class="home-hero"><div class="home-hero-label">CAST MANAGEMENT SYSTEM</div><h1>ホーム</h1><p>CAST FLOWへようこそ。<br>使用する機能を選択してください。</p></div>
+      <div class="home-user-card"><div class="home-user-label">LOGGED IN CAST</div><div id="homeCastName" class="home-user-name">-</div><div id="homeCastId" class="home-user-id">-</div></div>
+      <div class="home-grid">
+        <button class="home-menu-card" onclick="showShiftView()"><div class="home-menu-icon">▣</div><strong>シフト提出</strong><small>月間シフトの入力・提出</small></button>
+        <button class="home-menu-card" onclick="showNotice('本日の出勤確認画面は準備中です')"><div class="home-menu-icon">✓</div><strong>出勤確認</strong><small>当日の出勤状況を確認</small></button>
+        <button id="homeAdminCard" class="home-menu-card hidden" onclick="openAdminPlaceholder('管理画面')"><div class="home-menu-icon">♟</div><strong>管理</strong><small>CAST FLOW管理メニュー</small></button>
+        <button class="home-menu-card" onclick="openSettingsPlaceholder()"><div class="home-menu-icon">⚙</div><strong>設定</strong><small>アカウント・各種設定</small></button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- =====================================================
+     06. シフト提出画面
+===================================================== -->
 <div id="shiftView" class="hidden">
-<header class="app-header"><div><div class="header-logo">CAST FLOW</div><div class="header-subtitle">SHIFT SUBMISSION</div></div><button class="header-diamond-button" onclick="showNotice('通知機能は準備中です')"><span class="header-diamond"></span></button></header>
+<header class="app-header">
+  <div class="app-header-left">
+    <button class="menu-button" onclick="openDrawer()" aria-label="メニュー"><span></span><span></span><span></span></button>
+    <div><div class="header-logo">CAST FLOW</div><div class="header-subtitle">SHIFT SUBMISSION</div></div>
+  </div>
+  <button class="header-diamond-button" onclick="showNotice('通知機能は準備中です')"><span class="header-diamond"></span></button>
+</header>
 <main class="main-content"><section>
   <div class="shift-top"><div><span class="page-label">SHIFT SUBMISSION</span><h1>シフト提出</h1></div><div id="monthStatus" class="month-status">未提出</div></div>
   <div class="progress-card"><div class="progress-header"><div><span>入力状況</span><strong id="progressPercent">0%</strong></div><p id="progressMessage">日付を選択して入力してください</p></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></div>
@@ -70,6 +119,32 @@
 </section></main>
 </div>
 
+
+<!-- =====================================================
+     05. ヘッダー・サイドメニュー
+===================================================== -->
+<div id="drawerOverlay" class="drawer-overlay" onclick="handleDrawerOverlayClick(event)">
+  <aside id="sideDrawer" class="side-drawer">
+    <div class="drawer-brand"><div class="drawer-logo">CAST FLOW</div><div class="drawer-system">CAST MANAGEMENT SYSTEM</div></div>
+    <div class="drawer-user"><div id="drawerCastName" class="drawer-user-name">-</div><div id="drawerCastId" class="drawer-user-id">-</div></div>
+    <div class="drawer-section-title">MENU</div>
+    <button id="drawerHomeButton" class="drawer-item" onclick="showHomeView()"><span class="drawer-item-icon">⌂</span>ホーム</button>
+    <button id="drawerShiftButton" class="drawer-item" onclick="showShiftView()"><span class="drawer-item-icon">▣</span>シフト提出</button>
+    <div id="drawerAdminArea" class="hidden">
+      <div class="drawer-divider"></div><div class="drawer-section-title">ADMIN</div>
+      <button class="drawer-item" onclick="openAdminPlaceholder('本日の出勤確認')"><span class="drawer-item-icon">✓</span>本日の出勤確認</button>
+      <button class="drawer-item" onclick="openAdminPlaceholder('月間提出状況')"><span class="drawer-item-icon">▤</span>月間提出状況</button>
+      <button class="drawer-item" onclick="openAdminPlaceholder('登録申請')"><span class="drawer-item-icon">♙</span>登録申請</button>
+      <button class="drawer-item" onclick="openAdminPlaceholder('キャスト管理')"><span class="drawer-item-icon">♟</span>キャスト管理</button>
+    </div>
+    <div class="drawer-divider"></div>
+    <button class="drawer-item" onclick="openSettingsPlaceholder()"><span class="drawer-item-icon">⚙</span>設定</button>
+  </aside>
+</div>
+
+<!-- =====================================================
+     10. 共通UI
+===================================================== -->
 <div id="multiSelectBar" class="multi-select-bar hidden"><div class="multi-select-info"><span>複数日選択中</span><strong id="multiSelectCount">0日選択</strong></div><div class="multi-select-actions"><button class="multi-select-cancel" onclick="cancelMultiSelect()">キャンセル</button><button id="multiSelectNextButton" class="multi-select-next" onclick="openSelectedDatesInput()" disabled>まとめて入力</button></div></div>
 
 <div id="shiftModal" class="modal-overlay hidden" onclick="if(event.target===this)closeShiftModal()"><div class="modal-card"><div class="modal-handle"></div>
@@ -115,6 +190,9 @@
 <div id="toast" class="toast"></div>
 
 <script>
+/* =====================================================
+ * 11. 基本設定・状態管理
+ * ===================================================== */
 const LIFF_ID="2011488723-gI54Hlt3";
 const GAS_API_URL="https://script.google.com/macros/s/AKfycbwSZZNbraag8jTLbZbqoXbq9UDQfCeIwA404xkEcVP9l5UZ-7-cCdQCNVXKVq7wqo8pNg/exec";
 let currentIdToken="",currentLineDisplayName="",currentCast=null;
@@ -198,8 +276,12 @@ async function startRegisteredApp(){
  const monthPromise=loadDisplayedMonth();
  await Promise.all([defaultsPromise,monthPromise]);
 
+ setupCastFlowNavigation();
+
  if(attendanceChangeDate){
   openShiftModal(attendanceChangeDate);
+ }else{
+  showHomeView();
  }
 
  // 管理者申請一覧は通常起動時には取得しない
@@ -293,6 +375,8 @@ async function openNormalShiftScreen(){
 
  initializeManualInputs();
  initializeCalendar();
+ setupCastFlowNavigation();
+ showShiftView();
 }
 
 function initializeCalendar(){
@@ -743,6 +827,67 @@ function showPending(r){document.getElementById("authApp").innerHTML=`<div class
 async function loadAdminRequests(){/* 管理者承認機能は認証ロジックを保持。管理画面を別導線にするまでは非表示。 */ try{await callApi({action:"getRegistrationRequests",idToken:currentIdToken})}catch(e){console.warn(e)}}
 async function approveRequest(id){const r=await callApi({action:"approveRegistrationRequest",idToken:currentIdToken,requestId:id});if(!r.success)throw new Error(r.error)}
 async function rejectRequest(id){const r=await callApi({action:"rejectRegistrationRequest",idToken:currentIdToken,requestId:id,note:""});if(!r.success)throw new Error(r.error)}
+
+/* =====================================================
+ * 13. CAST FLOW ナビゲーション
+ * ===================================================== */
+function setupCastFlowNavigation(){
+ const castName=currentCast&&currentCast.castName?currentCast.castName:"";
+ const castId=currentCast&&currentCast.castId?currentCast.castId:"";
+ const isAdmin=!!(currentCast&&(currentCast.isAdmin===true||currentCast.admin===true));
+
+ [["homeCastName",castName||"-"],["drawerCastName",castName||"-"],["homeCastId",castId?"CAST ID : "+castId:""],["drawerCastId",castId?"CAST ID : "+castId:""]].forEach(([id,value])=>{
+  const el=document.getElementById(id);if(el)el.textContent=value;
+ });
+
+ const drawerAdminArea=document.getElementById("drawerAdminArea");
+ const homeAdminCard=document.getElementById("homeAdminCard");
+ if(drawerAdminArea)drawerAdminArea.classList.toggle("hidden",!isAdmin);
+ if(homeAdminCard)homeAdminCard.classList.toggle("hidden",!isAdmin);
+}
+
+/* =====================================================
+ * 14. ホーム画面
+ * ===================================================== */
+function showHomeView(){
+ closeDrawer();
+ document.getElementById("authView").classList.add("hidden");
+ document.getElementById("shiftView").classList.add("hidden");
+ document.getElementById("homeView").classList.remove("hidden");
+ setDrawerActive("home");
+}
+function showShiftView(){
+ closeDrawer();
+ document.getElementById("authView").classList.add("hidden");
+ document.getElementById("homeView").classList.add("hidden");
+ document.getElementById("shiftView").classList.remove("hidden");
+ setDrawerActive("shift");
+ if(calendar)setTimeout(()=>calendar.updateSize(),50);
+}
+function openDrawer(){
+ const overlay=document.getElementById("drawerOverlay");
+ if(!overlay)return;
+ overlay.classList.add("open");
+ document.body.classList.add("modal-open");
+}
+function closeDrawer(){
+ const overlay=document.getElementById("drawerOverlay");
+ if(!overlay)return;
+ overlay.classList.remove("open");
+ document.body.classList.remove("modal-open");
+}
+function handleDrawerOverlayClick(event){
+ if(event.target.id==="drawerOverlay")closeDrawer();
+}
+function setDrawerActive(page){
+ const home=document.getElementById("drawerHomeButton");
+ const shift=document.getElementById("drawerShiftButton");
+ if(home)home.classList.toggle("active",page==="home");
+ if(shift)shift.classList.toggle("active",page==="shift");
+}
+function openAdminPlaceholder(title){closeDrawer();showNotice(title+"は準備中です")}
+function openSettingsPlaceholder(){closeDrawer();showNotice("設定画面は準備中です")}
+
 function escapeHtml(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 </script>
 </body>
