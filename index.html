@@ -302,7 +302,8 @@ const CAST_FLOW_ICONS={
 
 };
 
-  function applyCastFlowIcons(){
+
+function applyCastFlowIcons(){
 
   const iconMap={
     "⌂":"home",
@@ -313,7 +314,6 @@ const CAST_FLOW_ICONS={
     "♟":"casts",
     "⚙":"settings"
   };
-
 
   document
     .querySelectorAll(
@@ -339,8 +339,7 @@ const CAST_FLOW_ICONS={
 
 
   /*
-   * ホームの「管理」だけは
-   * CAST管理用アイコンにする
+   * ホームの「管理」
    */
 
   const adminCard=
@@ -361,6 +360,28 @@ const CAST_FLOW_ICONS={
     }
 
   }
+
+
+  /*
+   * ヘッダーの通知アイコン
+   * ダイヤ → ベル
+   */
+
+  document
+    .querySelectorAll(
+      ".header-diamond-button"
+    )
+    .forEach(button=>{
+
+      button.innerHTML=
+        CAST_FLOW_ICONS.bell;
+
+      button.setAttribute(
+        "aria-label",
+        "通知"
+      );
+
+    });
 
 }
 /* =====================================================
